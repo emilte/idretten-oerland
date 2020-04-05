@@ -1,0 +1,17 @@
+{% extends 'webshop/base.html' %}
+{% block title %}Upload{% endblock %}
+{% load static %}
+
+{% block head %}
+    <style media="screen">
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+    <form class="container" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button class="btn btn-secondary" type="submit" name="button">Upload</button>
+    </form>
+{% endblock %}

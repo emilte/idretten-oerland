@@ -1,0 +1,85 @@
+<!-- Navbar -->
+{% load static %}
+<nav style="padding: 0px 0px 0px 20px" class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+
+    <a style="padding: 0px; margin: 0px 30px 0px 0px" class="navbar-brand" href="{% url 'home' %}">
+        <img src="https://img.icons8.com/ios/50/AAAAAA/deadlift.png">
+        MyLogo
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div id="navbar" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Butikk v1
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item text-dark" href="">Program styrke</a>
+                    <a class="dropdown-item text-dark" href="">Program for jente</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-dark" href="">Program forsvaret</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">Butikk v2</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href=""></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">Om Oss</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">Kontakt</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">FAQ</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+            </li>
+        </ul>
+
+
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <img src="https://img.icons8.com/carbon-copy/50/AAAAAA/shopping-cart.png">
+                </a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a id="navbar-user" class="nav-link" href="{% url 'accounts:profile' %}">
+                        <img src="https://img.icons8.com/ios-glyphs/30/AAAAAA/user--v1.png">
+                        {{ user.get_full_name }}
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'accounts:login' %}" class="nav-link">Logg inn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:signup' %}">Registrer</a>
+                </li>
+            {% endif %}
+        </ul>
+
+
+    </div>
+</nav> <!-- End: navbar -->
