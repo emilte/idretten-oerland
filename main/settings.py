@@ -43,6 +43,10 @@ INSTALLED_APPS = [
 
     'distance',
     'main',
+    'emil',
+    'henrik',
+    'patrick',
+    'stefan',
 ]
 
 MIDDLEWARE = [
