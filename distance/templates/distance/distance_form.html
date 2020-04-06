@@ -7,38 +7,52 @@ Registrer treningsøkten
 {% block body %}
 
 <div class="container">
-  <h1 class="mb-5">Registrer treningsøkten: </h1>
+    <h1 class="mb-5">Registrer treningsøkten: </h1>
 
-  <form>
-      <label>Fornavn: </label>
-      <input type="text" class="form-control"><br>
+    <form method="post">
+        {% csrf_token %}
 
-      <label>Etternavn: </label>
-      <input type="text" class="form-control"><br>
+        {% for field in form %}
+            {{ field.label_tag }}
+            {{ field }}
 
-      <label>Avdeling: </label>
-      <input type="text" class="form-control"><br>
-
-      <label>Treningstype: </label>
-      <select class="form-control">
-        <option value="ski">Styrke</option>
-          <option value="løping">Løping</option>
-          <option value="sykling">Sykling</option>
-          <option value="gåing">Gåing</option>
-          <option value="svømming">Svømming</option>
-          <option value="ski">Ski</option>
-      </select><br>
-
-      <label>Distanse: </label>
-      <input type="text" class="form-control"><br>
-
-      <label>Kommentar: </label>
-      <textarea  class="form-control" name="kommentar" rows="6" cols="80"></textarea><br><br>
-
-      <button type="button" class="btn btn-dark">Registrer</button>
+            <div class="text-danger">
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endfor %}
 
 
-  </form>
+        <div class="text-danger">
+            {{ form.non_field_errors }}
+        </div>
+
+
+        <button class="btn btn-dark btn-lg btn-block mt-3" type="submit">Registrer</button>
+
+    </form>
 </div>
 
+
 {% endblock body %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#id_type").change(function(e) {
+                console.log(1);
+                var whitelist = [2,3,4,5,6]
+                var selected = parseInt(e.currentTarget.value)
+                if ( whitelist.includes(selected) ) {
+                    $("#id_distance").attr("disabled", false)
+                }
+                else {
+                    $("#id_distance").attr("disabled", true)
+                }
+            })
+
+        })
+    </script>
+{% endblock %}
