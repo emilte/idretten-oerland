@@ -17,7 +17,7 @@ class RegistreringForm(forms.ModelForm):
 
     class Meta:
         model = distance_models.Registrering
-        exclude = []
+        exclude = ['user']
         #fields = []
 
 

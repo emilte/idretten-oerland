@@ -16,7 +16,7 @@ class Registrering(models.Model):
         (5, 'svømming'),
         (6, 'ski'),
     ]
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=False, related_name="answers", verbose_name="Bruker")
     first_name = models.CharField(max_length=140, null=True, blank=False, verbose_name="Fornavn")
     last_name = models.CharField(max_length=140, null=True, blank=False, verbose_name="Etternavn")
     department = models.CharField(max_length=140, null=True, blank=False, verbose_name="Avdeling")

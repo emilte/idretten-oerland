@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Resultater
+{% endblock %}
+
+
+
+
+{% block body %}
+    <div class="container">
+
+        <div class="h1">
+            Resultater:
+        </div>
+
+        {% for result in results %}
+            <div class="mb-4">
+                <div class="text-warning">
+                    {{ result.first_name }} {{ result.last_name }} ({{ result.department }}):
+                    <br>
+                    {{ result.get_type_display }}: {{ result.distance }} km
+                </div>
+                <div class="text-secondary">
+                    Kommentar: {{ result.comment }}
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock body %}
+
+
+
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+        })
+    </script>
+{% endblock %}

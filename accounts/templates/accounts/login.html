@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "accounts/account_styles.css" %}">
+    <style media="screen">
+        .default-theme {
+            min-width: 220px;
+            max-width: 500px;
+        }
+    </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{% url 'accounts:login' %}">Logg inn</a></li>
+{% endblock %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+        <h2>Du er allerede logget inn</h2>
+    {% else %}
+        <div class="row">
+            <div class="col">
+                <div class="default-theme">
+
+                    <h2>Logg inn:</h2>
+
+                    <form class="" method="post">
+                        {% csrf_token %}
+                        Email:<br>
+                        <input class="form-control mb-3" type="text" name="email" value="">
+                        Passord:<br>
+                        <input class="form-control mb-3" type="password" name="password" value="">
+
+                        <button class="btn btn-primary mt-3" type="submit" name="button">Logg inn</button>
+                    </form>
+
+                    <div class="text-danger">
+                        {{ error }}
+                    </div>
+
+                    <span>Mangler du bruker?</span>
+                    <a href="{% url 'accounts:signup' %}">Opprett en her</a>
+
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <br>
+    {% endif %}
+{% endblock %}
+
+{% block scriptblock %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+        })
+    </script>
+{% endblock %}

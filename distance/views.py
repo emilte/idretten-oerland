@@ -1,6 +1,8 @@
 from django.views import View
 from django.shortcuts import render, redirect
+
 from distance import forms as distance_forms
+from distance import models as distance_models
 
 # Create your views here.
 
@@ -16,7 +18,17 @@ class Register(View):
         form = self.form_class(data=request.POST) # instans av RegisterForm
 
         if form.is_valid():
-            form.save()
-            return redirect('distance:register')
+            answer = form.save()
+            answer.user = request.user
+            answer.save()
+            return redirect('stefan:index')
 
         return render(request, self.template, {'form': form})
+
+
+class Results(View):
+    template = 'distance/results.html'
+
+    def get(self, request):
+        results = distance_models.Registrering.objects.all()
+        return render(request, self.template, {'results': results})
