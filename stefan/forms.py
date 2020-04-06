@@ -5,8 +5,30 @@ from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import get_user_model
 
+from stefan import models as distance_models
 
 User = get_user_model()
+
+class RegistreringForm(forms.ModelForm):
+    # required_css_class = 'required font-bold'
+
+    class Meta:
+        model = distance_models.Registrering
+        exclude = []
+
+
+
+    def __init__(self, *args, **kwargs):
+        super(type(self), self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
+        self.fields['firstName'].widget.attrs.update({'placeholder': 'Ola'})
+        self.fields['lastName'].widget.attrs.update({'placeholder': 'Nordmann'})
+        self.fields['department'].widget.attrs.update({'placeholder': 'LV'})
+        self.fields['distance'].widget.attrs.update({'placeholder': '8,2 km'})
+        self.fields['comment'].widget.attrs.update({'placeholder': 'Rolig jogg, fint vær :)'})
+
 
 # End: imports -----------------------------------------------------------------
 #

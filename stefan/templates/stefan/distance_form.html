@@ -6,33 +6,50 @@ Registrer treningsøkten
 
 {% block body %}
 
+<div class="container">
+  <h1 class="mb-4">Registrer treningsøkten: </h1>
 
-<h1>Registrer treningsøkten: </h1>
+  <form method="post">
+    {% csrf_token %}
 
-<form class="container">
-    <label>Fornavn: </label>
-    <input type="text" class="form-control"><br>
-    <label>Etternavn: </label>
-    <input type="text" class="form-control"><br>
-    <label>Avdeling: </label>
-    <input type="text" class="form-control"><br>
-    <label>Treningstype: </label>
-    <select class="form-control">
-        <option value="løping">Løping</option>
-        <option value="sykling">Sykling</option>
-        <option value="gåing">Gåing</option>
-        <option value="svømming">Svømming</option>
-        <option value="ski">Ski</option>
-    </select><br>
+    {% for field in form %}
+      {{ field.label_tag }}
+      {{ field }}
 
+      <div class="text-danger">
+        {% for error in field.errors  %}
+          {{ error }}
+        {% endfor %}
+      </div>
+    {% endfor %}
 
-    <label>Distanse: </label>
-    <input type="text" class="form-control"><br><br>
+    <div class="text-danger">
+      {{ form.non_field_errors }}
+    </div>
 
-    <button type="button" class="btn btn-dark">Registrer</button>
+      <button type="submit" class="btn btn-dark btn-block btn-lg mt-4">Registrer</button>
 
+  </form>
 
-</form>
-
+</div>
 
 {% endblock body %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      $("#id_type").change(function(e){
+       var blacklist = [0,2]
+       var selected = parseInt(e.currentTarget.value)
+       if(blacklist.includes(selected) ) {
+         $("#id_distance").attr("disabled", true)
+       }
+       else {
+         $("#id_distance").attr("disabled", false)
+       }
+     })
+
+    })
+  </script>
+{% endblock %}
