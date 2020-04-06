@@ -6,33 +6,39 @@ Registrer treningsøkten
 
 {% block body %}
 
+<div class="container">
+  <h1 class="mb-5">Registrer treningsøkten: </h1>
 
-<h1>Registrer treningsøkten: </h1>
+  <form>
+      <label>Fornavn: </label>
+      <input type="text" class="form-control"><br>
 
-<form class="container">
-    <label>Fornavn: </label>
-    <input type="text" class="form-control"><br>
-    <label>Etternavn: </label>
-    <input type="text" class="form-control"><br>
-    <label>Avdeling: </label>
-    <input type="text" class="form-control"><br>
-    <label>Treningstype: </label>
-    <select class="form-control">
-        <option value="løping">Løping</option>
-        <option value="sykling">Sykling</option>
-        <option value="gåing">Gåing</option>
-        <option value="svømming">Svømming</option>
-        <option value="ski">Ski</option>
-    </select><br>
+      <label>Etternavn: </label>
+      <input type="text" class="form-control"><br>
+
+      <label>Avdeling: </label>
+      <input type="text" class="form-control"><br>
+
+      <label>Treningstype: </label>
+      <select class="form-control">
+        <option value="ski">Styrke</option>
+          <option value="løping">Løping</option>
+          <option value="sykling">Sykling</option>
+          <option value="gåing">Gåing</option>
+          <option value="svømming">Svømming</option>
+          <option value="ski">Ski</option>
+      </select><br>
+
+      <label>Distanse: </label>
+      <input type="text" class="form-control"><br>
+
+      <label>Kommentar: </label>
+      <textarea  class="form-control" name="kommentar" rows="6" cols="80"></textarea><br><br>
+
+      <button type="button" class="btn btn-dark">Registrer</button>
 
 
-    <label>Distanse: </label>
-    <input type="text" class="form-control"><br><br>
-
-    <button type="button" class="btn btn-dark">Registrer</button>
-
-
-</form>
-
+  </form>
+</div>
 
 {% endblock body %}
