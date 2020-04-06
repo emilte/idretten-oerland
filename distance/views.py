@@ -1,11 +1,17 @@
 from django.views import View
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required, permission_required
 
 from distance import forms as distance_forms
 from distance import models as distance_models
 
 # Create your views here.
 
+Register_dec = [
+    login_required,
+]
+@method_decorator(Register_dec, name='dispatch')
 class Register(View):
     form_class = distance_forms.RegistreringForm
     template = 'distance/distance_form.html'
@@ -25,7 +31,10 @@ class Register(View):
 
         return render(request, self.template, {'form': form})
 
-
+Results_dec = [
+    login_required,
+]
+@method_decorator(Results_dec, name='dispatch')
 class Results(View):
     template = 'distance/results.html'
 

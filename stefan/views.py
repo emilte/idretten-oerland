@@ -1,6 +1,7 @@
 from django.views import View
 from django.shortcuts import render, redirect
 from stefan import forms as stefan_forms
+from stefan import models as stefan_models
 
 # Create your views here.
 
@@ -27,3 +28,10 @@ class Register(View):
             return redirect('stefan:index')
 
         return render(request, self.template, {'form': form})
+
+class Results(View):
+    template = 'stefan/results.html'
+
+    def get(self, request):
+        results = stefan_models.Registrering.objects.all()
+        return render(request, self.template, {'results': results})

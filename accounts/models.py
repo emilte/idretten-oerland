@@ -31,6 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     first_name = models.CharField(max_length=60, null=True, blank=False, verbose_name="Fornavn")
     last_name = models.CharField(max_length=150, null=True, blank=False, verbose_name="Etternavn")
+    department = models.CharField(max_length=140, null=True, blank=False, verbose_name="Avdeling")
     nickname = models.CharField(max_length=150, null=True, blank=False, verbose_name="Kallenavn")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

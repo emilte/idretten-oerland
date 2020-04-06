@@ -17,16 +17,12 @@ class Registrering(models.Model):
         (6, 'ski'),
     ]
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=False, related_name="answers", verbose_name="Bruker")
-    first_name = models.CharField(max_length=140, null=True, blank=False, verbose_name="Fornavn")
-    last_name = models.CharField(max_length=140, null=True, blank=False, verbose_name="Etternavn")
-    department = models.CharField(max_length=140, null=True, blank=False, verbose_name="Avdeling")
     type = models.IntegerField(choices=TYPES, default=0, verbose_name="Treningstype")
     distance = models.FloatField(null=True, blank=True, verbose_name="Distanse")
     comment = models.TextField(null=True, blank=True)
 
 
     class Meta:
-        ordering = ['first_name']
         verbose_name = "Registrering"
         verbose_name_plural = "Registreringer"
 

@@ -42,6 +42,7 @@ class EditUserForm(forms.ModelForm):
             'first_name',
             'last_name',
             'nickname',
+            'department',
         ]
 
 

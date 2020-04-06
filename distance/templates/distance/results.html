@@ -16,7 +16,7 @@
         {% for result in results %}
             <div class="mb-4">
                 <div class="text-warning">
-                    {{ result.first_name }} {{ result.last_name }} ({{ result.department }}):
+                    {{ result.user.nickname }} ({{ result.user.department }}):
                     <br>
                     {{ result.get_type_display }}: {{ result.distance }} km
                 </div>

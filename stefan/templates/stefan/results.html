@@ -1,0 +1,25 @@
+
+{% extends 'main/base.html' %}
+{% block title %}
+Registrer treningsøkten
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <h1 class="mb-4">Resultater: </h1>
+
+    {% for result in results  %}
+
+      <div class="text-warning mb-1">
+        {{ result.firstName }} {{ result.lastName }} ({{ result.department }}): {{ result.get_type_display }} {{ result.distance }} km
+      </div>
+      <div class="text-secondary">
+        {{ result.comment }}
+      </div>
+      <br>
+    {% endfor %}
+
+</div>
+
+{% endblock body %}
