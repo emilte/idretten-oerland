@@ -4,14 +4,12 @@
 
 <nav id="nav" class="navbar navbar-expand-md navbar-dark fixed-top">
 
-    <a class="navbar-brand" href="{% url 'stefan:index' %}">
+    <a class="navbar-brand" href="{% url 'home' %}">
         <img width="45" src="{% static "main/Forsvarets_merke.png" %}" alt="">
         <span class="d-none d-sm-none d-md-inline">
             Idretten Ørland Flystasjon
         </span>
     </a>
-
-
 
     <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -36,7 +34,7 @@
 
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'accounts:profile' %}">
+                    <a class="nav-link text-light" href="{% url 'accounts:profile' %}">
                         <i class="lni-user"></i>
                         {{ user }}
                     </a>
