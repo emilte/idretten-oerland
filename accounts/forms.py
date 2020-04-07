@@ -79,9 +79,18 @@ class CustomPasswordChangeForm(PasswordChangeForm):
 
     class Meta:
         model = User
+        exclude = []
+        labels = {
+            'old_password': 'Gammelt passord',
+            'new_password1': 'Nytt passord',
+            'new_password2': 'Nytt passord bekreftelse',
+        }
 
     def __init__(self, *args, **kwargs):
-        super(type(self), self).__init__(*args, **kwargs)
-        self.fields['old_password'].widget.attrs.update({'class': 'form-control'})
-        self.fields['new_password1'].widget.attrs.update({'class': 'form-control'})
-        self.fields['new_password2'].widget.attrs.update({'class': 'form-control'})
+        request = kwargs.pop("request")
+        super(CustomPasswordChangeForm, self).__init__(request.user, *args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+        # self.fields['old_password'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['new_password1'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['new_password2'].widget.attrs.update({'class': 'form-control'})

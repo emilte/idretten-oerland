@@ -104,7 +104,7 @@ nav {
 }
 
 #content-wrapper {
-    min-height: 56.9vh !important;
+    min-height: 80vh !important;
     max-width: 90vw;
 }
 
@@ -117,7 +117,7 @@ nav {
 
 
 #footer {
-    background: rgba(20,20,40,0.5);
+    background: rgba(100,20,20,0.2);
     /* Space between content and footer */
     margin-top: 2em;
 }

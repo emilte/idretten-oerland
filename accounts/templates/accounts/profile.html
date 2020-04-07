@@ -43,11 +43,11 @@
                 <div class="default-theme user-theme">
                     <h4>Personlig informasjon:</h4>
                     <p>
+                        <div>Fullt navn: {{ user.get_full_name | default:'Ikke oppgitt' }}</div>
                         <div>Email: {{ user.email }}</div>
-                        <div>Mobil: {{ user.phone_number }}</div>
+                        <div>Kallenavn: {{ user.nickname }}</div>
                         <hr class="border border-light">
-                        <div>Antall kurs som lead: {{ user.lead_courses.count }}</div>
-                        <div>Antall kurs som follow: {{ user.follow_courses.count }}</div>
+                        <div>Antall økter: {{ user.workouts.all.count }}</div>
                     </p>
                 </div>
             </div>
@@ -55,30 +55,17 @@
             <div class="col-md mt-2">
 
                 <div class="nav nav-tabs" role="tablist">
-                    <a class="nav-item nav-link" id="event-tab" data-toggle="tab" href="#event-panel" role="tab" aria-controls="event-panel" aria-selected="false">Mine events</a>
-
-                    {% if perms.course.view_course %}
-                        <a class="nav-item nav-link active" id="course-tab" data-toggle="tab" href="#course-panel" role="tab" aria-controls="course-panel" aria-selected="true">Mine kurs</a>
-                    {% endif %}
+                    <a class="nav-item nav-link" id="workout-tab" data-toggle="tab" href="#workout-panel" role="tab" aria-controls="workout-panel" aria-selected="true">Mine økter</a>
                 </div>
 
                 <div id="panels" class="tab-content p-2 default-theme user-theme rounded-top">
-                    <div class="tab-pane fade" id="event-panel" role="tabpanel" aria-labelledby="event-tab">
-                        {% for event in request.user.events.all %}
+                    <div class="tab-pane fade" id="workout-panel" role="tabpanel" aria-labelledby="workout-tab">
+                        {% for workout in request.user.workouts.all %}
                             <div class="">
-                                <a href="">{{ event }}</a>
+                                <a href="">{{ workout }}</a>
                             </div>
                         {% endfor %}
                     </div>
-                    {% if perms.course.view_course %}
-                        <div class="tab-pane fade show active" id="course-panel" role="tabpanel" aria-labelledby="course-tab">
-                            {% for course in request.user.getCourses %}
-                                <div class="">
-                                    <a href="">{{ course }}</a>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -109,6 +96,7 @@
 
         <div class="text-right mt-4">
             <a class="btn btn-secondary text-light" href="{% url 'accounts:edit_profile' %}">Rediger profil</a>
+            <a class="btn btn-secondary text-light" href="{% url 'accounts:change_password' %}">Endre passord</a>
             <a class="btn btn-danger text-light" href="{% url 'accounts:logout' %}">Logg ut</a>
         </div>
 

@@ -14,6 +14,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.admin.views.decorators import staff_member_required, user_passes_test
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
 
 from accounts import models as account_models
 from accounts import forms as account_forms
@@ -114,13 +115,14 @@ class LogoutView(View):
 class ChangePasswordView(View):
     template = "accounts/change_password.html"
     form_class = account_forms.CustomPasswordChangeForm
+    #form_class = PasswordChangeForm
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(request.user)
+        form = self.form_class(request=request)
         return render(request, self.template, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(data=request.POST)
+        form = self.form_class(data=request.POST, request=request)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
