@@ -25,6 +25,7 @@
                     <th scope="col">Kallenavn</th>
                     <th scope="col">Antall økter</th>
                     <th scope="col">Antall km</th>
+                    <th scope="col">Poeng</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                         <td>{{ user.nickname }}</td>
                         <td>{{ user.workouts.all.count }}</td>
                         <td>{{ user.workout_sum_km | default:'0' }}</td>
+                        <td>{{ user.workout_points }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

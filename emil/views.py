@@ -23,6 +23,7 @@ class Index(View):
 
 register_dec = [
     login_required,
+    permission_required('emil.add_workout', login_url='forbidden'),
 ]
 @method_decorator(register_dec, name='dispatch')
 class Register(View):
@@ -49,6 +50,7 @@ class Register(View):
 
 results_dec = [
     login_required,
+    permission_required('emil.view_workout', login_url='forbidden'),
 ]
 @method_decorator(results_dec, name='dispatch')
 class Results(View):

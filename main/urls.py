@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from django.views.generic import TemplateView
+
 
 
 urlpatterns = [
     path('', views.Home.as_view(), name='home'),
+    path('forbidden/', TemplateView.as_view(template_name="main/forbidden.html"), name='forbidden'),
     path('admin/', admin.site.urls),
     path('distanse/', include('distance.urls')),
     path('emil/', include('emil.urls')),

@@ -1,4 +1,4 @@
-{% extends 'songs/base.html' %}
+{% extends 'main/base.html' %}
 {% block title %}Welcome{% endblock %}
 {% load static %}
 
@@ -9,9 +9,12 @@
 {% endblock head %}
 
 {% block body %}
-    <h1>Stopp en halv!</h1>
-
-    Du har ikke tilgang til dette.
-    <br>
-    Vennligst ta kontakt med administrator hvis du mener du burde ha denne tilgangen.
+    <div class="h1">
+        Stopp en halv!
+    </div>
+    <div class="">
+        Du har ikke tilgang til dette.
+        <br>
+        Vennligst ta kontakt med administrator hvis du mener du burde ha denne tilgangen.
+    </div>
 {% endblock %}

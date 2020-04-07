@@ -6,16 +6,33 @@ from django.utils import timezone
 # End: imports -----------------------------------------------------------------
 
 
+
 class Workout(models.Model):
+    NOTHING = 0
+    STRENGTH = 1
+    RUNNING = 2
+    CYCLING = 3
+    WALKING = 4
+    SWIMMING = 5
+    SKIING = 6
     TYPES = [
-        (0, '------'),
-        (1, 'styrke'),
-        (2, 'løping'),
-        (3, 'sykling'),
-        (4, 'gåing'),
-        (5, 'svømming'),
-        (6, 'ski'),
+        (NOTHING, '------'),
+        (STRENGTH, 'styrke'),
+        (RUNNING, 'løping'),
+        (CYCLING, 'sykling'),
+        (WALKING, 'gåing'),
+        (SWIMMING, 'svømming'),
+        (SKIING, 'ski'),
     ]
+    POINTS = {
+        NOTHING: 0,
+        STRENGTH: 4,
+        RUNNING: 1,
+        CYCLING: 1/4,
+        WALKING: 1/2,
+        SWIMMING: 2,
+        SKIING: 1/2,
+    }
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=False, related_name="workouts", verbose_name="Bruker")
     type = models.IntegerField(choices=TYPES, default=0, verbose_name="Treningstype")
     distance = models.FloatField(null=True, blank=True, verbose_name="Distanse")
