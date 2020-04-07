@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-CUSTOM_SETTINGS = ["heroku_settings", "allauth_settings"] # heroku_settings
+CUSTOM_SETTINGS = ["heroku_settings"] # heroku_settings
 # CUSTOM_SETTINGS = ["dev_settings", "allauth_settings", "local_settings"] # local_settings
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -151,9 +151,6 @@ if "dev_settings" in CUSTOM_SETTINGS:
     print("== IMPORTED: dev_settings ==")
     # print("== dev_settings was not imported ==")
 
-if "allauth_settings" in CUSTOM_SETTINGS:
-    from .allauth_settings import *
-    print("== IMPORTED: allauth_settings ==")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
