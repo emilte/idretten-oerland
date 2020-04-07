@@ -59,8 +59,9 @@ class Results(View):
     def get(self, request):
         results = emil_models.Workout.objects.all()
         users = User.objects.all()
+        Workout = emil_models.Workout
         return render(request, self.template, {
             'results': results,
             'users': users,
-
+            'Workout': Workout,
         })

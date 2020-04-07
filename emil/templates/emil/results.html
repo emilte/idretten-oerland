@@ -8,6 +8,12 @@
         tbody tr:hover {
             background-color: rgba(255,0,0,0.2);
         }
+        #modal-points .modal-content {
+            background-color: rgba(20,0,0,1);
+        }
+        #modal-points-close {
+            color: white;
+        }
     </style>
 {% endblock %}
 
@@ -18,14 +24,22 @@
             Resultater:
         </div>
 
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-points">
+            Poengsystem
+        </button>
+
         <table id="table-results" class="table text-light">
             {# <caption>List of users</caption> <!-- For screen readers --> #}
             <thead>
-                <tr>
+                <tr class="cursor-n-resize">
                     <th scope="col">Kallenavn</th>
                     <th scope="col">Antall økter</th>
                     <th scope="col">Antall km</th>
-                    <th scope="col">Poeng</th>
+                    <th scope="col">
+                        Poeng
+                        <span class="lni-question-circle h4 text-secondary cursor-pointer" data-toggle="modal" data-target="#modal-points"></span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +53,36 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        {{ Workout.SWIMMING }}
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal-points" tabindex="-1" role="dialog" aria-labelledby="modal-points-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-dark text-light">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-points-title">Poengsystem</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span id="modal-points-close" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+
+                            <li>Styrke = {{ Workout.STRENGTH_P }}p / økt</li>
+                            <li>Løping = {{ Workout.RUNNING_P }}p / km</li>
+                            <li>Sykling = {{ Workout.CYCLING_P }}p / km</li>
+                            <li>Gåing = {{ Workout.WALKING_P }}p / km</li>
+                            <li>Svømming = {{ Workout.SWIMMING_P }}p / km</li>
+                            <li>Ski = {{ Workout.SKIING_P }}p / km</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Lukk</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 {% endblock body %}

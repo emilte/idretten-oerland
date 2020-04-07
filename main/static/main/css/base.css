@@ -74,6 +74,10 @@ a:hover {
     cursor: default;
 }
 
+.cursor-n-resize {
+    cursor: n-resize;
+}
+
 /* override styles when printing */
 @media print {
     .no-print {

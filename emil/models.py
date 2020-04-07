@@ -55,6 +55,34 @@ class Workout(models.Model):
 
         return super(type(self), self).save(*args, **kwargs)
 
+    @classmethod
+    def NOTHING_P(cls):
+        return cls.POINTS[cls.NOTHING]
+
+    @classmethod
+    def STRENGTH_P(cls):
+        return cls.POINTS[cls.STRENGTH]
+
+    @classmethod
+    def RUNNING_P(cls):
+        return cls.POINTS[cls.RUNNING]
+
+    @classmethod
+    def CYCLING_P(cls):
+        return cls.POINTS[cls.CYCLING]
+
+    @classmethod
+    def WALKING_P(cls):
+        return cls.POINTS[cls.WALKING]
+
+    @classmethod
+    def SWIMMING_P(cls):
+        return cls.POINTS[cls.SWIMMING]
+
+    @classmethod
+    def SKIING_P(cls):
+        return cls.POINTS[cls.SKIING]
+
 
 
 # class Example(models.Model):
