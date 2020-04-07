@@ -7,6 +7,8 @@ verify_ssl = true
 
 [packages]
 django = "*"
+faker = "==1.0.1"
+django-seed = "*"
 
 [requires]
 python_version = "3.8"

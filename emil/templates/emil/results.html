@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Resultater{% endblock %}
+
+{% block head %}
+    <style media="screen">
+        tbody tr:hover {
+            background-color: rgba(255,0,0,0.2);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="h1">
+            Resultater:
+        </div>
+
+        <table id="table-results" class="table text-light">
+            {# <caption>List of users</caption> <!-- For screen readers --> #}
+            <thead>
+                <tr>
+                    <th scope="col">Kallenavn</th>
+                    <th scope="col">Antall økter</th>
+                    <th scope="col">Antall km</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.nickname }}</td>
+                        <td>{{ user.workouts.all.count }}</td>
+                        <td>{{ user.workout_sum_km | default:'0' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock body %}
+
+
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha256-dtGH1XcAyKopMui5x20KnPxuGuSx9Rs6piJB/4Oqu6I=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $(function() {
+                $("#table-results").tablesorter();
+            });
+
+        })
+    </script>
+{% endblock %}

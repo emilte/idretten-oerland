@@ -5,10 +5,32 @@ from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import get_user_model
 
+from emil import models as emil_models
+
 
 User = get_user_model()
 
 # End: imports -----------------------------------------------------------------
+
+class WorkoutForm(forms.ModelForm):
+    required_css_class = 'required font-bold'
+
+    class Meta:
+        model = emil_models.Workout
+        exclude = ['user', 'created']
+        #fields = []
+
+
+    def __init__(self, *args, **kwargs):
+        super(type(self), self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control mb-2'})
+
+        self.fields['date'].widget.attrs.update({'class': 'flatpickr form-control'})
+        self.fields['comment'].widget.attrs.update({'rows': 5})
+        self.fields['distance'].widget.attrs.update({'placeholder': 'Eks: 10km'})
+
+
 #
 # class ExampleModelForm(forms.ModelForm):
 #     # duration = forms.TimeField(input_formats=MIN_FORMATS, required=False)

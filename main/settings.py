@@ -33,9 +33,14 @@ STATIC_URL = '/static/'
 # Custom User model
 AUTH_USER_MODEL = 'accounts.User'
 
+DATE_INPUT_FORMATS = [
+    '%d-%m-%Y',
+    '%d.%m.%Y',
+    '%d/%m/%Y',
+]
+
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -123,7 +128,7 @@ TIME_ZONE = 'Europe/Oslo'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 

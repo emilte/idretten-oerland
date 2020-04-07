@@ -4,8 +4,11 @@ import json
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Avg, Count, Min, Sum
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+
+from emil import models as emil_models
 # End: imports -----------------------------------------------------------------
 
 class UserManager(BaseUserManager):
@@ -62,3 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.first_name
+
+    def workout_sum_km(self):
+        km = emil_models.Workout.objects.filter(user=self).aggregate(result=Sum('distance'))['result'] or 0
+        return round(km , 1)

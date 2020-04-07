@@ -17,6 +17,7 @@
     <div id="navbar" class="collapse navbar-collapse mr-auto">
         <ul class="navbar-nav mr-auto">
 
+
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'admin:index' %}">
                     {# <img src="https://img.icons8.com/ios/24/FFFFFF/69.png"> #}
@@ -24,6 +25,16 @@
                     <i class="lni-calendar"></i>
                     Adminpanel
                 </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="distance-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Distance
+                </a>
+                <div class="dropdown-menu" aria-labelledby="distance-dropdown">
+                    <a class="dropdown-item" href="{% url 'distance:register' %}">Registrer økt</a>
+                    <a class="dropdown-item" href="{% url 'distance:results' %}">Resultater</a>
+                </div>
             </li>
 
             <li class="nav-item">
@@ -35,11 +46,14 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'emil:index' %}">
-                    <i class="lni-calendar"></i>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="emil-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Emil
                 </a>
+                <div class="dropdown-menu" aria-labelledby="emil-dropdown">
+                    <a class="dropdown-item" href="{% url 'emil:register' %}">Registrer økt</a>
+                    <a class="dropdown-item" href="{% url 'emil:results' %}">Resultater</a>
+                </div>
             </li>
 
             <li class="nav-item">
