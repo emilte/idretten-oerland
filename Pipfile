@@ -9,6 +9,8 @@ verify_ssl = true
 django = "*"
 faker = "==1.0.1"
 django-seed = "*"
+django-heroku = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.8"
