@@ -24,11 +24,6 @@
             Resultater:
         </div>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-points">
-            Poengsystem
-        </button>
-
         <table id="table-results" class="table text-light">
             {# <caption>List of users</caption> <!-- For screen readers --> #}
             <thead>
@@ -54,8 +49,6 @@
             </tbody>
         </table>
 
-        {{ Workout.SWIMMING }}
-
         <!-- Modal -->
         <div class="modal fade" id="modal-points" tabindex="-1" role="dialog" aria-labelledby="modal-points-title" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -68,7 +61,6 @@
                     </div>
                     <div class="modal-body">
                         <ul>
-
                             <li>Styrke = {{ Workout.STRENGTH_P }}p / økt</li>
                             <li>Løping = {{ Workout.RUNNING_P }}p / km</li>
                             <li>Sykling = {{ Workout.CYCLING_P }}p / km</li>

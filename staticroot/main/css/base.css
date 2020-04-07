@@ -27,7 +27,7 @@ body {
 
 [required] {
     /* background-color: rgba(255, 220, 220, 1); */
-    background-color: rgba(200, 240, 255, 1);
+    /* background-color: rgba(200, 240, 255, 1); */
 }
 
 span {
@@ -74,6 +74,10 @@ a:hover {
     cursor: default;
 }
 
+.cursor-n-resize {
+    cursor: n-resize;
+}
+
 /* override styles when printing */
 @media print {
     .no-print {
@@ -104,7 +108,7 @@ nav {
 }
 
 #content-wrapper {
-    min-height: 56.9vh !important;
+    min-height: 80vh !important;
     max-width: 90vw;
 }
 
@@ -117,7 +121,7 @@ nav {
 
 
 #footer {
-    background: rgba(20,20,40,0.5);
+    background: rgba(100,20,20,0.2);
     /* Space between content and footer */
     margin-top: 2em;
 }
