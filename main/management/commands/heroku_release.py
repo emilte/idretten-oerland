@@ -1,10 +1,7 @@
 # imports
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from halo import Halo
 from django.core import management
-from accounts.models import *
-from songs.models import *
 # End: imports -----------------------------------------------------------------
 
 # Settings:
@@ -17,8 +14,6 @@ class Command(BaseCommand):
 
         try:
             management.call_command('create_admin')
-            management.call_command('site_heroku')
-            management.call_command('SITE_ID')
             # management.call_command('flush', interactive=False)
             management.call_command('myseed')
         except Exception as e:
