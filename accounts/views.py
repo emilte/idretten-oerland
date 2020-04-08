@@ -95,7 +95,7 @@ class LoginView(View):
         error = None
         if user is not None:
             login(request, user)
-            return redirect('accounts:login')
+            return redirect('accounts:profile')
         else:
             error = "Feil"
 
