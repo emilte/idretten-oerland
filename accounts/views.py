@@ -141,7 +141,7 @@ class ChangePasswordView(View):
 
 export_perms = [
     login_required,
-    permission_required('accounts.view_user', login_url="forbidden"),
+    user_passes_test(lambda u: u.is_superuser, login_url="forbidden")
 ]
 
 @method_decorator(export_perms, name='dispatch')

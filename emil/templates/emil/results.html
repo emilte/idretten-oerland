@@ -46,6 +46,12 @@
             </tbody>
         </table>
 
+        {% if user.is_superuser %}
+            <div class="text-right">
+                <a href="{% url 'accounts:users_xlsx' %}">Last ned .xlsx</a>
+            </div>
+        {% endif %}
+
         <!-- Modal -->
         <div class="modal fade" id="modal-points" tabindex="-1" role="dialog" aria-labelledby="modal-points-title" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
