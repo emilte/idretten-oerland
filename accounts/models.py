@@ -6,10 +6,16 @@ from django.conf import settings
 from django.utils import timezone
 from django.db.models import Avg, Count, Min, Sum
 from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import Permission, Group
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+
 
 from emil import models as emil_models
 # End: imports -----------------------------------------------------------------
+
+class PermissionCode(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, null=False, blank=False)
+    secret = models.CharField(max_length=200, null=False, blank=False)
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -32,9 +38,9 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
-    first_name = models.CharField(max_length=60, null=True, blank=False, verbose_name="Fornavn")
-    last_name = models.CharField(max_length=150, null=True, blank=False, verbose_name="Etternavn")
-    department = models.CharField(max_length=140, null=True, blank=False, verbose_name="Avdeling")
+    first_name = models.CharField(max_length=60, null=True, blank=True, verbose_name="Fornavn")
+    last_name = models.CharField(max_length=150, null=True, blank=True, verbose_name="Etternavn")
+    department = models.CharField(max_length=140, null=True, blank=True, verbose_name="Avdeling")
     nickname = models.CharField(max_length=150, null=True, blank=False, verbose_name="Kallenavn")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

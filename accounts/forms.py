@@ -15,6 +15,7 @@ User = get_user_model()
 class SignUpForm(UserCreationForm):
 
     required_css_class = "required font-bold"
+    code = forms.CharField(required=False, label="Kode")
 
     class Meta:
         model = User
@@ -23,6 +24,7 @@ class SignUpForm(UserCreationForm):
             'first_name',
             'last_name',
             'nickname',
+            'code',
         ]
 
     def __init__(self, *args, **kwargs):

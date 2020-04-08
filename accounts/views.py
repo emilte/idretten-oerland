@@ -68,6 +68,12 @@ class SignUpView(View):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)
             login(request, user)
+
+            code = form.cleaned_data['code']
+            for permission_code in account_models.PermissionCode.objects.all():
+                if code == permission_code.secret:
+                    user.groups.add(permission_code.group)
+
             return redirect('stefan:index')
         else:
             return render(request, self.template, {'form': form})

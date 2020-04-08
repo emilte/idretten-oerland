@@ -58,3 +58,4 @@ class UserAdmin(auth_admin.UserAdmin):
 # Register your models here.
 admin.site.register(User, UserAdmin)
 admin.site.register(Permission)
+admin.site.register(PermissionCode)

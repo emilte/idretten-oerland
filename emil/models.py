@@ -6,7 +6,6 @@ from django.utils import timezone
 # End: imports -----------------------------------------------------------------
 
 
-
 class Workout(models.Model):
     NOTHING = 0
     STRENGTH = 1
