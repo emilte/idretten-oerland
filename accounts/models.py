@@ -84,3 +84,15 @@ class User(AbstractBaseUser, PermissionsMixin):
             elif workout.distance:
                 p += workout.distance * emil_models.Workout.POINTS[workout.type]
         return round(p, 1)
+
+    def serialize(self):
+        jayson = {}
+        jayson['id'] = self.id
+        jayson['email'] = self.email
+        jayson['nickname'] = self.nickname
+        jayson['first_name'] = self.first_name
+        jayson['last_name'] = self.last_name
+        jayson['department'] = self.department
+        jayson['is_staff'] = self.is_staff
+        jayson['is_superuser'] = self.is_superuser
+        return jayson

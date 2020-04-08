@@ -16,6 +16,7 @@ urlpatterns = [
     path('change_password/', views.ChangePasswordView.as_view(), name='change_password'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('profile/edit/', views.EditProfileView.as_view(), name='edit_profile'),
+    path('users/xlsx/', views.UsersXLSX.as_view(), name='users_xlsx'),
 
     #path('delete_user/', views.DeleteUserView.as_view(), name="delete_user"),
 

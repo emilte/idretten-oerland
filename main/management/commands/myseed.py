@@ -33,7 +33,7 @@ class Command(BaseCommand):
         seeder.faker.seed_instance(1234)
 
         seeder.add_entity(User, 20, {
-
+            'department': lambda x: seeder.faker.word(),
         })
         seeder.add_entity(emil_models.Workout, 200, {
             'distance': lambda x: round(random.uniform(0, 20), 1),

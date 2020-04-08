@@ -1,15 +1,17 @@
 # imports
 # import spotipy.oauth2 as oauth2
+from openpyxl import Workbook
 
 from django.views import View
 from django.db.models import Q
+from django.utils import timezone
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth import views as auth_views
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -134,3 +136,70 @@ class ChangePasswordView(View):
             update_session_auth_hash(request, user)  # Important!
             return redirect("accounts:profile")
         return render(request, self.template, {'form': form})
+
+
+
+export_perms = [
+    login_required,
+    permission_required('accounts.view_user', login_url="forbidden"),
+]
+
+@method_decorator(export_perms, name='dispatch')
+class UsersXLSX(View):
+
+    def get(self, request, *args, **kwargs):
+        filename = "users.xlsx"
+
+        users = User.objects.all()
+
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = f'attachment; filename={filename}-{timezone.now()}.xlsx'
+
+        workbook = Workbook()
+
+        # Get active worksheet/tab
+        worksheet = workbook.active
+        worksheet.title = 'Users'
+
+        # Define the titles for columns
+        columns = [
+            'ID',
+            'email',
+            'nickname',
+            'first_name',
+            'last_name',
+            'department',
+            'staff',
+            'superuser',
+        ]
+        row_num = 1
+
+        # Assign the titles for each cell of the header
+        for col_num, column_title in enumerate(columns, 1):
+            cell = worksheet.cell(row=row_num, column=col_num)
+            cell.value = column_title
+
+        # Iterate through all movies
+        for user in users:
+            row_num += 1
+
+            # Define the data for each cell in the row
+            row = [
+                user.id,
+                user.email,
+                user.nickname,
+                user.first_name,
+                user.last_name,
+                user.department,
+                user.is_staff,
+                user.is_superuser,
+            ]
+
+            # Assign the data for each cell of the row
+            for col_num, cell_value in enumerate(row, 1):
+                cell = worksheet.cell(row=row_num, column=col_num)
+                cell.value = cell_value
+
+        workbook.save(response)
+
+        return response
