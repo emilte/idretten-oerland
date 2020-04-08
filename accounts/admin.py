@@ -7,16 +7,18 @@ from accounts.models import *
 # End: imports -----------------------------------------------------------------
 
 # Actions for Admin-site:
-def make_staff(modeladmin, request, queryset):
-    queryset.update(is_staff=True)
-    make_staff.short_description = "Mark selected users as is_staff"
-
 def make_normal_user(modeladmin, request, queryset):
     queryset.update(is_staff=False)
     queryset.update(is_superuser=False)
     make_normal_user.short_description = "Mark selected users as normal users without any permissions"
 
+def make_staff(modeladmin, request, queryset):
+    queryset.update(is_staff=True)
+    queryset.update(is_superuser=False)
+    make_staff.short_description = "Mark selected users as is_staff"
+
 def make_superuser(modeladmin, request, queryset):
+    queryset.update(is_staff=True)
     queryset.update(is_superuser=True)
     make_superuser.short_description = "Mark selected users as is_superuser"
 
