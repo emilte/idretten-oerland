@@ -34,7 +34,14 @@ class UserManager(BaseUserManager):
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
-        return user
+        return use
+
+class Department(models.Model):
+    name = models.CharField(max_length=200, null=True, blank=False, verbose_name="Avdeling")
+    short_name = models.CharField(max_length=50, null=True, blank=False, verbose_name="Forkortelse")
+
+    def __str__(self):
+        return self.short_name
 
 class User(AbstractBaseUser, PermissionsMixin):
     MALE = "M"
@@ -49,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     first_name = models.CharField(max_length=60, null=True, blank=True, verbose_name="Fornavn")
     last_name = models.CharField(max_length=150, null=True, blank=True, verbose_name="Etternavn")
-    department = models.CharField(max_length=140, null=True, blank=True, verbose_name="Avdeling")
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Avdeling", related_name="users")
     nickname = models.CharField(max_length=150, null=True, blank=False, verbose_name="Kallenavn")
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default=None, null=True, blank=True, verbose_name="Kjønn")
     is_active = models.BooleanField(default=True)

@@ -31,6 +31,7 @@
 {% endblock %}
 
 {% block body %}
+
     <div class="">
 
         <div id="title" class="text-center">
@@ -38,62 +39,64 @@
         </div>
 
         <div class="row mt-2">
-            <div class="col-md-7 mt-2">
-                <div class="">
-                    <h4>Personlig informasjon:</h4>
-                    <p>
-                        <div>Fullt navn: {{ user.get_full_name | default:'Ikke oppgitt' }}</div>
-                        <div>Email: {{ user.email }}</div>
-                        <div>Kallenavn: {{ user.nickname }}</div>
-                        <hr class="bg-light">
-                        <div>Din rank: {{ rank }}</div>
-                        <div>Antall poeng: {{ user.workout_points }}</div>
-                        <div>Antall økter: {{ user.workouts.all.count }}</div>
-                        <div>Antall km: {{ user.workout_sum_km }}</div>
-                        <hr class="bg-light">
-                        <div class="">Du ligger {{ diff }}p bak 1.plass</div>
-                        <div class="">
-                            For å komme på 1.plass må enten:
-                            <ul class="">
-                                <li>Trene {{ facts.0 }} styrkeøkter</li>
-                                <li>Løpe {{ facts.1 }} km</li>
-                                <li>Sykle {{ facts.2 }} km</li>
-                                <li>Gå {{ facts.3 }} km</li>
-                                <li>Svømme {{ facts.4 }} km</li>
-                                <li>Gå {{ facts.5 }} km på ski</li>
-                            </ul>
-                        </div>
-                    </p>
-                </div>
-            </div>
+
 
             <div class="col-md mt-2">
 
                 <div class="nav nav-tabs" role="tablist">
-                    <a class="nav-item nav-link" id="workout-tab" data-toggle="tab" href="#workout-panel" role="tab" aria-controls="workout-panel" aria-selected="true">Mine økter</a>
+                    <a class="nav-item nav-link active" id="workout-tab" data-toggle="tab" href="#workout-panel" role="tab" aria-controls="workout-panel" aria-selected="true">Mine økter</a>
                 </div>
 
                 <div id="panels" class="tab-content p-2 default-theme user-theme rounded-top">
-                    <div class="tab-pane fade" id="workout-panel" role="tabpanel" aria-labelledby="workout-tab">
+                    <div class="tab-pane show active" id="workout-panel" role="tabpanel" aria-labelledby="workout-tab">
                         {% for workout in request.user.workouts.all %}
                             <div class="">
-                                <a href="">{{ workout }}</a>
+                                {{ workout }}
                             </div>
                         {% endfor %}
                     </div>
                 </div>
+                <h4 class="mt-5">Statistikk:</h4>
+                <div class="mt-3">Din rank: {{ rank }}</div>
+                <div>Antall poeng: {{ user.workout_points }}</div>
+                <div>Antall økter: {{ user.workouts.all.count }}</div>
+                <div>Antall km: {{ user.workout_sum_km }}</div>
+                <hr class="bg-light">
+                <div class="">Du ligger {{ diff }}p bak 1.plass</div>
+                <div class="">
+                  For å komme på 1.plass må enten:
+                  <ul class="">
+                    <li>Trene {{ facts.0 }} styrkeøkter</li>
+                    <li>Løpe {{ facts.1 }} km</li>
+                    <li>Sykle {{ facts.2 }} km</li>
+                    <li>Gå {{ facts.3 }} km</li>
+                    <li>Svømme {{ facts.4 }} km</li>
+                    <li>Gå {{ facts.5 }} km på ski</li>
+                  </ul>
+                </div>
             </div>
 
+            <div class="col-md-6 mt-2">
+              <div class="">
+                <h4>Personlig informasjon:</h4>
+                <p>
+                  <div>Fullt navn: {{ user.get_full_name | default:'Ikke oppgitt' }}</div>
+                  <div>Email: {{ user.email }}</div>
+                  <div>Kallenavn: {{ user.nickname }}</div>
+                </p>
+                <div class="text-left mt-4">
+                    <a class="btn btn-secondary text-light" href="{% url 'accounts:edit_profile' %}">Rediger profil</a>
+                    <a class="btn btn-secondary text-light" href="{% url 'accounts:change_password' %}">Endre passord</a>
+                    <a class="btn btn-danger text-light" href="{% url 'accounts:logout' %}">Logg ut</a>
+                </div>
+              </div>
+            </div>
         </div>
 
 
 
 
-        <div class="text-right mt-4">
-            <a class="btn btn-secondary text-light" href="{% url 'accounts:edit_profile' %}">Rediger profil</a>
-            <a class="btn btn-secondary text-light" href="{% url 'accounts:change_password' %}">Endre passord</a>
-            <a class="btn btn-danger text-light" href="{% url 'accounts:logout' %}">Logg ut</a>
-        </div>
+
 
     </div>
 {% endblock %}
