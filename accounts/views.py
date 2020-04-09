@@ -57,7 +57,7 @@ class ProfileView(View):
         users.sort(key=itemgetter(1), reverse=True)
         rank = getIndexOfTuple(users, 0, request.user.id)
         diff = users[0][1] - users[rank][1]
-        facts = [ diff / scale for scale in distance_models.Workout.POINTS.values() if scale != 0 ]
+        facts = [ math.ceil(diff/scale) for scale in distance_models.Workout.POINTS.values() if scale != 0 ]
         # facts = [
         #     math.ceil(diff / distance_models.Workout.STRENGTH_P() ),
         #     math.ceil(diff / distance_models.Workout.RUNNING_P() ),
