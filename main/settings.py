@@ -19,8 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-#CUSTOM_SETTINGS = ["heroku_settings"] # heroku_settings
-CUSTOM_SETTINGS = ["dev_settings", "local_settings"] # local_settings
+CUSTOM_SETTINGS = ["heroku_settings"] # heroku_settings
+# CUSTOM_SETTINGS = ["dev_settings", "local_settings"] # local_settings
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'z=*134)eo1fn$lilm)fouy(22ftu)(&wp=7c(=h1a$(pg**^&5'

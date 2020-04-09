@@ -5,9 +5,34 @@
         <!-- Grid row -->
         <div class="row">
 
+            <!-- Grid column -->
+            {% if request.user.is_staff %}
+                <div class="col-md-3 mx-auto">
+                    <!-- Links -->
+                    <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Adminpanel</h5>
 
+                    <ul class="list-unstyled">
+                            <li><a href="{% url 'admin:index' %}">Index</a></li>
+                    </ul>
+
+                </div>
+            {% endif %}
 
             <hr class="clearfix w-100 d-md-none">
+
+            <!-- Grid column -->
+            <div class="col-md-3 mx-auto">
+                <!-- Links -->
+                <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Eksempel</h5>
+
+                <ul class="list-unstyled">
+                    <li><a href="">Link 1</a></li>
+                    <li><a href="">Link 1</a></li>
+                    <li><a href="">Link 1</a></li>
+                    <li><a href="">Link 1</a></li>
+                </ul>
+
+            </div>
 
         </div>
         <!-- End: Grid row -->
