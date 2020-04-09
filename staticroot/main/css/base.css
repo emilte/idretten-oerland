@@ -5,7 +5,6 @@ html {
 }
 
 body {
-    background-image: url('/static/songs/images/background2.png');
     background-size: 100% auto;
     background-position: top left;
     background-repeat: repeat-y;
@@ -49,6 +48,16 @@ span {
 
 .required:after {
     content:" *";
+}
+
+.bg-none {
+    background-color: rgba(0,0,0,0);
+}
+
+.bg-blur {
+    background-color: rgba(0,0,0,0);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
 }
 
 /* Scrollbar */

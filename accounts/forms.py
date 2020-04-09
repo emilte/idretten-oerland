@@ -24,6 +24,7 @@ class SignUpForm(UserCreationForm):
             'first_name',
             'last_name',
             'nickname',
+            'sex',
             'code',
         ]
 

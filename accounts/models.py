@@ -37,11 +37,21 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
+    MALE = "M"
+    FEMALE = "F"
+    OTHER = "O"
+    SEX_CHOICES = [
+        (None, "-----"),
+        (MALE, "Mann"),
+        (FEMALE, "Kvinne"),
+        (OTHER, "Annet"),
+    ]
     email = models.EmailField(max_length=254, unique=True)
     first_name = models.CharField(max_length=60, null=True, blank=True, verbose_name="Fornavn")
     last_name = models.CharField(max_length=150, null=True, blank=True, verbose_name="Etternavn")
     department = models.CharField(max_length=140, null=True, blank=True, verbose_name="Avdeling")
     nickname = models.CharField(max_length=150, null=True, blank=False, verbose_name="Kallenavn")
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES, default=None, null=True, blank=True, verbose_name="Kjønn")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

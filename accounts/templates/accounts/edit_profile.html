@@ -1,14 +1,10 @@
 {% extends 'main/base.html' %}
 {% load static %}
+
 {% block title %}{{ request.user }}{% endblock title %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static "accounts/account_styles.css" %}">
-
     <style media="screen">
-
-        {{ request.user.settings.account_theme.as_css }}
-
         #form {
             max-width: 35em;
         }

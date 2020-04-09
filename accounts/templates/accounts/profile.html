@@ -1,9 +1,9 @@
 {% extends 'main/base.html' %}
-{% block title %}{{ request.user }}{% endblock %}
 {% load static %}
 
+{% block title %}{{ request.user }}{% endblock %}
+
 {% block head %}
-    <link rel="stylesheet" href="{% static "accounts/account_styles.css" %}">
 
     <style media="screen">
 
@@ -22,7 +22,6 @@
 
         }
 
-        {{ request.user.settings.account_theme.as_css }}
 
     </style>
 {% endblock head %}
@@ -69,26 +68,6 @@
                 </div>
             </div>
 
-            <!--
-            <div class="col-md mt-2">
-
-                <div class="btn btn-dark btn-block btn-sm text-light" data-toggle="collapse" data-target="#my-courses" aria-expanded="false" aria-controls="my-courses">
-                    Mine kurs ({{ courses.count }})
-                    <i class="lni-chevron-down cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                </div>
-
-                <div id="my-courses" class="collapse">
-                    <div class="overflow-auto default-theme user-theme rounded-top p-3">
-                        {% for course in courses %}
-                            <div class="">
-                                <a href="{% url 'courses:course_view' course.id %}">{{ course }}</a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-            </div>
-            -->
         </div>
 
 

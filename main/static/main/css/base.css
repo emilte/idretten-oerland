@@ -5,7 +5,6 @@ html {
 }
 
 body {
-    background-image: url('/static/songs/images/background2.png');
     background-size: 100% auto;
     background-position: top left;
     background-repeat: repeat-y;
