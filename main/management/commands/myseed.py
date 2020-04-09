@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
 from distance import models as distance_models
+from accounts import models as accounts_models
 
 # End: imports -----------------------------------------------------------------
 
@@ -32,8 +33,12 @@ class Command(BaseCommand):
 
         seeder.faker.seed_instance(1234)
 
+        seeder.add_entity(accounts_models.Department, 6, {
+            'name': lambda x: seeder.faker.word(),
+            'short_name': lambda x: seeder.faker.word(),
+        })
         seeder.add_entity(User, 20, {
-            'department': lambda x: seeder.faker.word(),
+            # 'department': lambda x: seeder.faker.word(),
         })
         seeder.add_entity(distance_models.Workout, 200, {
             'distance': lambda x: round(random.uniform(0, 20), 1),
