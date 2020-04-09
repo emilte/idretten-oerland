@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . import models
+from distance import models as distance_models
 
 # Register your models here.
-admin.site.register(models.Registrering)
+admin.site.register(distance_models.Workout)

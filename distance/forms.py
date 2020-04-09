@@ -12,12 +12,12 @@ User = get_user_model()
 
 # End: imports -----------------------------------------------------------------
 
-class RegistreringForm(forms.ModelForm):
-    # required_css_class = 'required font-bold'
+class WorkoutForm(forms.ModelForm):
+    required_css_class = 'required font-bold'
 
     class Meta:
-        model = distance_models.Registrering
-        exclude = ['user']
+        model = distance_models.Workout
+        exclude = ['user', 'created']
         #fields = []
 
 
@@ -26,6 +26,8 @@ class RegistreringForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs.update({'class': 'form-control mb-2'})
 
+        self.fields['date'].widget.attrs.update({'class': 'flatpickr form-control'})
+        self.fields['comment'].widget.attrs.update({'rows': 5})
         self.fields['distance'].widget.attrs.update({'placeholder': 'Eks: 10km'})
 
 

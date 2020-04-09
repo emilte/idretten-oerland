@@ -1,20 +1,26 @@
 from django.views import View
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 
+
 from distance import forms as distance_forms
 from distance import models as distance_models
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 # Create your views here.
 
-Register_dec = [
+register_dec = [
     login_required,
+    permission_required('distance.add_workout', login_url='forbidden'),
 ]
-@method_decorator(Register_dec, name='dispatch')
+@method_decorator(register_dec, name='dispatch')
 class Register(View):
-    form_class = distance_forms.RegistreringForm
-    template = 'distance/distance_form.html'
+    form_class = distance_forms.WorkoutForm
+    template = 'distance/workout_form.html'
 
     def get(self, request):
         form = self.form_class() # instans av RegisterForm
@@ -27,17 +33,27 @@ class Register(View):
             answer = form.save()
             answer.user = request.user
             answer.save()
+            messages.add_message(request, messages.SUCCESS, 'Økten ble lagret')
             return redirect('stefan:index')
 
         return render(request, self.template, {'form': form})
 
-Results_dec = [
+
+
+results_dec = [
     login_required,
+    permission_required('distance.view_workout', login_url='forbidden'),
 ]
-@method_decorator(Results_dec, name='dispatch')
+@method_decorator(results_dec, name='dispatch')
 class Results(View):
     template = 'distance/results.html'
 
     def get(self, request):
-        results = distance_models.Registrering.objects.all()
-        return render(request, self.template, {'results': results})
+        results = distance_models.Workout.objects.all()
+        users = User.objects.all()
+        Workout = distance_models.Workout
+        return render(request, self.template, {
+            'results': results,
+            'users': users,
+            'Workout': Workout,
+        })

@@ -10,7 +10,7 @@ from django.contrib.auth.models import Permission, Group
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
 
-from emil import models as emil_models
+from distance import models as distance_models
 # End: imports -----------------------------------------------------------------
 
 class PermissionCode(models.Model):
@@ -89,10 +89,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def workout_points(self):
         p = 0
         for workout in self.workouts.all():
-            if workout.type == emil_models.Workout.STRENGTH:
-                p += emil_models.Workout.POINTS[workout.type]
-            elif workout.distance:
-                p += workout.distance * emil_models.Workout.POINTS[workout.type]
+            if workout.type == distance_models.Workout.STRENGTH:
+                p += distance_models.Workout.POINTS[workout.type]
+            else:
+                p += workout.distance * distance_models.Workout.POINTS[workout.type]
         return round(p, 1)
 
     def serialize(self):

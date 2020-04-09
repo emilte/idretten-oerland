@@ -18,8 +18,8 @@ from django.urls import path, include
 from . import views
 from django.views.generic import TemplateView
 
-from emil import models as emil_models
-from emil import api as emil_api
+# from emil import models as emil_models
+# from emil import api as emil_api
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -31,12 +31,10 @@ urlpatterns = [
     path('forbidden/', TemplateView.as_view(template_name="main/forbidden.html"), name='forbidden'),
     path('admin/', admin.site.urls),
     path('distanse/', include('distance.urls')),
-    path('emil/', include('emil.urls')),
-    path('henrik/', include('henrik.urls')),
-    path('patrick/', include('patrick.urls')),
+    # path('emil/', include('emil.urls')),
     path('stefan/', include('stefan.urls')),
     path('accounts/', include('accounts.urls')),
 
-    path('api/users/', emil_api.ExtendedAPI.as_view(model=User), name="api_users"),
-    path('api/workouts/', emil_api.ExtendedAPI.as_view(model=emil_models.Workout), name="api_workouts"),
+    # path('api/users/', emil_api.ExtendedAPI.as_view(model=User), name="api_users"),
+    # path('api/workouts/', emil_api.ExtendedAPI.as_view(model=emil_models.Workout), name="api_workouts"),
 ]

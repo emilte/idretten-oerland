@@ -1,10 +1,18 @@
 {% extends 'main/base.html' %}
-{% block title %}
-    Resultater
+{% load static %}
+
+{% block title %}Resultater{% endblock %}
+
+{% block head %}
+    <style media="screen">
+        tbody tr:hover {
+            background-color: rgba(255,0,0,0.2);
+        }
+        #modal-points-close {
+            color: white;
+        }
+    </style>
 {% endblock %}
-
-
-
 
 {% block body %}
     <div class="container">
@@ -13,28 +21,78 @@
             Resultater:
         </div>
 
-        {% for result in results %}
-            <div class="mb-4">
-                <div class="text-warning">
-                    {{ result.user.nickname }} ({{ result.user.department }}):
-                    <br>
-                    {{ result.get_type_display }}: {{ result.distance }} km
-                </div>
-                <div class="text-secondary">
-                    Kommentar: {{ result.comment }}
+        <table id="table-results" class="table text-light">
+            {# <caption>List of users</caption> <!-- For screen readers --> #}
+            <thead>
+                <tr class="cursor-n-resize">
+                    <th scope="col">Kallenavn</th>
+                    <th scope="col">Antall økter</th>
+                    <th scope="col">Antall km</th>
+                    <th scope="col">
+                        Poeng
+                        <span class="lni-question-circle h4 text-secondary cursor-pointer" data-toggle="modal" data-target="#modal-points"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.nickname }}</td>
+                        <td>{{ user.workouts.all.count }}</td>
+                        <td>{{ user.workout_sum_km | default:'0' }}</td>
+                        <td>{{ user.workout_points }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if user.is_superuser %}
+            <div class="text-right">
+                <a href="{% url 'accounts:users_xlsx' %}">Last ned .xlsx</a>
+            </div>
+        {% endif %}
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal-points" tabindex="-1" role="dialog" aria-labelledby="modal-points-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-blur text-light border">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-points-title">Poengsystem</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span id="modal-points-close" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li>Styrke = {{ Workout.STRENGTH_P }}p / økt</li>
+                            <li>Løping = {{ Workout.RUNNING_P }}p / km</li>
+                            <li>Sykling = {{ Workout.CYCLING_P }}p / km</li>
+                            <li>Gåing = {{ Workout.WALKING_P }}p / km</li>
+                            <li>Svømming = {{ Workout.SWIMMING_P }}p / km</li>
+                            <li>Ski = {{ Workout.SKIING_P }}p / km</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Lukk</button>
+                    </div>
                 </div>
             </div>
-        {% endfor %}
+        </div>
 
     </div>
 {% endblock body %}
 
 
 
-
 {% block scripts %}
+    <!-- https://mottie.github.io/tablesorter/docs/ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha256-dtGH1XcAyKopMui5x20KnPxuGuSx9Rs6piJB/4Oqu6I=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+
+            $(function() {
+                $("#table-results").tablesorter();
+            });
 
         })
     </script>

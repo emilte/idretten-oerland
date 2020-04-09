@@ -1,0 +1,107 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Registrer treningsøkten{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1 class="mb-5">Registrer treningsøkten: </h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="row m-0 p-0">
+            <div class="col-md-4 m-0 p-0 mr-3">
+                {{ form.type.label_tag }}
+                {{ form.type }}
+                <div class="text-danger">
+                    {% for error in form.type.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-4 m-0 p-0 mr-3">
+                {{ form.distance.label_tag }}
+                {{ form.distance }}
+                <div class="text-danger">
+                    {% for error in form.distance.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md m-0 p-0">
+                {{ form.date.label_tag }}
+                <div class="input-group">
+                    {{ form.date }}
+                    <div class="input-group-append">
+                        <div class="btn btn-dark text-light clear-datetime" data-target="{{ form.date.auto_id }}">
+                            <i class="lni-close small"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-danger">
+                    {% for error in form.date.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-0 p-0">
+            <div class="col m-0 p-0">
+                {{ form.comment.label_tag }}
+                {{ form.comment }}
+                <div class="text-danger">
+                    {% for error in form.comment.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="text-danger">
+            {{ form.non_field_errors }}
+        </div>
+
+
+        <button class="btn btn-dark btn-lg btn-block mt-3" type="submit">Registrer</button>
+
+    </form>
+</div>
+
+
+{% endblock body %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#id_type").change(function(e) {
+                console.log(1);
+                var whitelist = [2,3,4,5,6]
+                var selected = parseInt(e.currentTarget.value)
+                if ( whitelist.includes(selected) ) {
+                    $("#id_distance").attr("disabled", false)
+                }
+                else {
+                    $("#id_distance").attr("disabled", true)
+                }
+            })
+
+        })
+
+        flatpickr(".flatpickr", {
+            locale: "no",
+            // altInput: true,
+            // altFormat: "j F, Y  H:i",
+            enableTime: false,
+            dateFormat: "d.m.Y"
+        });
+
+        $('.clear-datetime').click(function() {
+            var id = $(this).attr('data-target');
+            $(`#${id}`).val("");
+        })
+
+    </script>
+{% endblock %}

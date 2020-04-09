@@ -23,7 +23,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, User
 
 from accounts import models as account_models
 from accounts import forms as account_forms
-from emil import models as emil_models
+from distance import models as distance_models
 
 User = get_user_model()
 # End: imports -----------------------------------------------------------------
@@ -49,21 +49,23 @@ class ProfileView(View):
     def get(self, request, *args, **kwargs):
 
         # Expensive computing for the server
+        # Maybe implement on client side instead
         users = []
         for user in User.objects.all():
             users.append( (user.id, user.workout_points() ) )
 
         users.sort(key=itemgetter(1), reverse=True)
-        rank = getIndexOfTuple(users, 0, request.user.id) # = 1
+        rank = getIndexOfTuple(users, 0, request.user.id)
         diff = users[0][1] - users[rank][1]
-        facts = [
-            math.ceil(diff / emil_models.Workout.STRENGTH_P() ),
-            math.ceil(diff / emil_models.Workout.RUNNING_P() ),
-            math.ceil(diff / emil_models.Workout.CYCLING_P() ),
-            math.ceil(diff / emil_models.Workout.WALKING_P() ),
-            math.ceil(diff / emil_models.Workout.SWIMMING_P() ),
-            math.ceil(diff / emil_models.Workout.SKIING_P() ),
-        ]
+        facts = [ diff / scale for scale in distance_models.Workout.POINTS.values() if scale != 0 ]
+        # facts = [
+        #     math.ceil(diff / distance_models.Workout.STRENGTH_P() ),
+        #     math.ceil(diff / distance_models.Workout.RUNNING_P() ),
+        #     math.ceil(diff / distance_models.Workout.CYCLING_P() ),
+        #     math.ceil(diff / distance_models.Workout.WALKING_P() ),
+        #     math.ceil(diff / distance_models.Workout.SWIMMING_P() ),
+        #     math.ceil(diff / distance_models.Workout.SKIING_P() ),
+        # ]
 
         return render(request, self.template, {
             'rank': rank,

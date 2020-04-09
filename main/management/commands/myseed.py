@@ -8,7 +8,7 @@ from django.core import management
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
-from emil import models as emil_models
+from distance import models as distance_models
 
 # End: imports -----------------------------------------------------------------
 
@@ -35,7 +35,7 @@ class Command(BaseCommand):
         seeder.add_entity(User, 20, {
             'department': lambda x: seeder.faker.word(),
         })
-        seeder.add_entity(emil_models.Workout, 200, {
+        seeder.add_entity(distance_models.Workout, 200, {
             'distance': lambda x: round(random.uniform(0, 20), 1),
             'type': lambda x: random.randint(0, 6),
             'comment': lambda x: seeder.faker.sentence(nb_words=2),

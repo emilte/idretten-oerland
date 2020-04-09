@@ -1,0 +1,60 @@
+<!-- Navbar -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/navbar.css' %}"/>
+
+<nav id="nav" class="navbar navbar-expand-md navbar-dark fixed-top">
+
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <img width="45" src="{% static "main/Forsvarets_merke.png" %}" alt="">
+        <span class="d-none d-sm-none d-md-inline">
+            Idretten Ørland Flystasjon
+        </span>
+    </a>
+
+    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div id="navbar" class="collapse navbar-collapse mr-auto">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="distance-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Treningsøkter
+                </a>
+                <div class="dropdown-menu bg-none" aria-labelledby="distance-dropdown" style="">
+                    <a class="dropdown-item text-light" href="{% url 'distance:register' %}">Registrer økt</a>
+                    <a class="dropdown-item text-light" href="{% url 'distance:results' %}">Resultater</a>
+                </div>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav ml-auto">
+
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'accounts:profile' %}">
+                        <i class="lni-user"></i>
+                        {{ user }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:logout' %}">
+                        <i class=""></i>
+                        Logg ut
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:login' %}">
+                        <i class=""></i>
+                        Logg inn
+                    </a>
+                </li>
+            {% endif %}
+
+
+        </ul>
+    </div>
+</nav> <!-- End: navbar -->
