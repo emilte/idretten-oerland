@@ -4,7 +4,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-ALLOWED_HOSTS = ['distanse-konkurranse.herokuapp.com']
+ALLOWED_HOSTS = ['idretten-oerland.herokuapp.com']
 
 DEBUG = True
 
