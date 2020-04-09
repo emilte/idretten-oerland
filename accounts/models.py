@@ -83,7 +83,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
     def workout_sum_km(self):
-        km = emil_models.Workout.objects.filter(user=self).aggregate(result=Sum('distance'))['result'] or 0
+        km = self.workouts.all().aggregate(result=Sum('distance'))['result'] or 0
         return round(km , 1)
 
     def workout_points(self):

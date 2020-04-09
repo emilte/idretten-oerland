@@ -1,6 +1,8 @@
 # imports
 # import spotipy.oauth2 as oauth2
 from openpyxl import Workbook
+from operator import itemgetter
+import math
 
 from django.views import View
 from django.db.models import Q
@@ -8,6 +10,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.db.models import Avg, Count, Min, Sum
 from django.contrib.auth import views as auth_views
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -20,9 +23,20 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, User
 
 from accounts import models as account_models
 from accounts import forms as account_forms
+from emil import models as emil_models
 
 User = get_user_model()
 # End: imports -----------------------------------------------------------------
+
+def getIndexOfTuple(l, index, value):
+    for pos,t in enumerate(l):
+        if t[index] == value:
+            return pos
+
+    # Matches behavior of list.index
+    raise ValueError("list.index(x): x not in list")
+
+
 
 profile_dec = [
     login_required,
@@ -33,7 +47,29 @@ class ProfileView(View):
     template = "accounts/profile.html"
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template, {})
+
+        # Expensive computing for the server
+        users = []
+        for user in User.objects.all():
+            users.append( (user.id, user.workout_points() ) )
+
+        users.sort(key=itemgetter(1), reverse=True)
+        rank = getIndexOfTuple(users, 0, request.user.id) # = 1
+        diff = users[0][1] - users[rank][1]
+        facts = [
+            math.ceil(diff / emil_models.Workout.STRENGTH_P() ),
+            math.ceil(diff / emil_models.Workout.RUNNING_P() ),
+            math.ceil(diff / emil_models.Workout.CYCLING_P() ),
+            math.ceil(diff / emil_models.Workout.WALKING_P() ),
+            math.ceil(diff / emil_models.Workout.SWIMMING_P() ),
+            math.ceil(diff / emil_models.Workout.SKIING_P() ),
+        ]
+
+        return render(request, self.template, {
+            'rank': rank,
+            'diff': diff,
+            'facts': facts,
+        })
 
 
 

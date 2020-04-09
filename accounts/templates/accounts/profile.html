@@ -39,14 +39,30 @@
 
         <div class="row mt-2">
             <div class="col-md-7 mt-2">
-                <div class="default-theme user-theme">
+                <div class="">
                     <h4>Personlig informasjon:</h4>
                     <p>
                         <div>Fullt navn: {{ user.get_full_name | default:'Ikke oppgitt' }}</div>
                         <div>Email: {{ user.email }}</div>
                         <div>Kallenavn: {{ user.nickname }}</div>
-                        <hr class="border border-light">
+                        <hr class="bg-light">
+                        <div>Din rank: {{ rank }}</div>
+                        <div>Antall poeng: {{ user.workout_points }}</div>
                         <div>Antall økter: {{ user.workouts.all.count }}</div>
+                        <div>Antall km: {{ user.workout_sum_km }}</div>
+                        <hr class="bg-light">
+                        <div class="">Du ligger {{ diff }}p bak 1.plass</div>
+                        <div class="">
+                            For å komme på 1.plass må enten:
+                            <ul class="">
+                                <li>Trene {{ facts.0 }} styrkeøkter</li>
+                                <li>Løpe {{ facts.1 }} km</li>
+                                <li>Sykle {{ facts.2 }} km</li>
+                                <li>Gå {{ facts.3 }} km</li>
+                                <li>Svømme {{ facts.4 }} km</li>
+                                <li>Gå {{ facts.5 }} km på ski</li>
+                            </ul>
+                        </div>
                     </p>
                 </div>
             </div>
