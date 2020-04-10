@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{ request.user }}{% endblock %}
+
+{% block head %}
+
+{% endblock head %}
+
+{% block body %}
+<div id="title" class="text-center">
+    <h1>Statistikk</h1>
+</div>
+
+{% for name,points in department_points.items %}
+  <div>{{ name }} : {{ points }} </div>
+{% endfor %}
+{% endblock %}

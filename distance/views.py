@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 from distance import forms as distance_forms
 from distance import models as distance_models
+from accounts import models as account_models
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -56,4 +57,27 @@ class Results(View):
             'results': results,
             'users': users,
             'Workout': Workout,
+        })
+stats_dec = [
+    login_required,
+    permission_required('distance.view_workout', login_url='forbidden'),
+]
+@method_decorator(results_dec, name='dispatch')
+class Stats(View):
+    template = 'distance/stats.html'
+
+    def get(self, request):
+        departments = account_models.Department.objects.all()
+        department_points = {
+        }
+
+        for department in departments:
+            users = department.users.all()
+            sum_points = 0
+            for user in users:
+                sum_points += user.workout_points()
+            department_points[department.name] = sum_points
+
+        return render(request, self.template, {
+            'department_points': department_points,
         })

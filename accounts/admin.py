@@ -30,8 +30,8 @@ class UserAdmin(auth_admin.UserAdmin):
 
     # Fields shown in user detail: admin/accounts//user/'id'/change
     fieldsets = [
-        [None,              {'fields': ['email', 'password']}],
-        ['Personal info',   {'fields': ['first_name', 'last_name'] }],
+        [None,              {'fields': ['password']}],
+        ['Personal info',   {'fields': ['first_name', 'last_name', 'email', 'department' ] }],
         ['Permissions',     {'fields': ['is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions']}],
         ['Important dates', {'fields': ['last_login', 'date_joined']}],
     ]
@@ -61,3 +61,4 @@ class UserAdmin(auth_admin.UserAdmin):
 admin.site.register(User, UserAdmin)
 admin.site.register(Permission)
 admin.site.register(PermissionCode)
+admin.site.register(Department)
