@@ -4,15 +4,52 @@
 {% block title %}{{ request.user }}{% endblock %}
 
 {% block head %}
-
+<style media="screen">
+    .rectangle-1 {
+        height: 150px;
+        background-color: rgba(185,5,5,1)
+    }
+    .rectangle-2 {
+        height: 100px;
+        background-color: rgba(185,5,5,0.5)
+    }
+    .rectangle-3 {
+        height: 50px;
+        background-color: rgba(185,5,5,0.2)
+    }
+</style>
 {% endblock head %}
 
 {% block body %}
-<div id="title" class="text-center">
-    <h1>Statistikk</h1>
-</div>
+    <div class="">
 
-{% for name,points in department_points.items %}
-  <div>{{ name }} : {{ points }} </div>
-{% endfor %}
+
+        <div id="title" class="text-center">
+            <h1>Statistikk</h1>
+        </div>
+
+        {% for name, points in department_points.items %}
+            <div>{{ name }} : {{ points }} </div>
+        {% endfor %}
+
+
+        <div class="">
+            <div class="row justify-content-md-center d-flex align-items-end">
+                <div class="col-2 text-center">
+                    2 plass
+                    <div class="rectangle-2 rounded"></div>
+                </div>
+                <div class="col-2 text-center">
+                    1 plass
+                    <div class="rectangle-1 rounded"></div>
+                </div>
+                <div class="col-2 text-center">
+                    3 plass
+                    <div class="rectangle-3 rounded"></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 {% endblock %}
