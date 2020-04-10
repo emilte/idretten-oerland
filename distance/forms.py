@@ -28,7 +28,7 @@ class WorkoutForm(forms.ModelForm):
 
         self.fields['date'].widget.attrs.update({'class': 'flatpickr form-control'})
         self.fields['comment'].widget.attrs.update({'rows': 5})
-        self.fields['distance'].widget.attrs.update({'placeholder': 'Eks: 10km'})
+        self.fields['distance'].widget.attrs.update({'placeholder': 'Eks: 8,2 km'})
 
 
 #

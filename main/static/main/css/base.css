@@ -37,7 +37,7 @@ span {
     height: calc(1.5em + .75rem + 2px) !important;
 }
 
-.input-group-text {
+.input-group-text-custom {
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
 }

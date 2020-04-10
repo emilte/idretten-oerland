@@ -34,7 +34,7 @@ class Workout(models.Model):
     }
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=False, related_name="workouts", verbose_name="Bruker")
     type = models.IntegerField(choices=TYPES, default=0, verbose_name="Treningstype")
-    distance = models.FloatField(default=0, null=False, blank=True, verbose_name="Distanse")
+    distance = models.FloatField(null=False, blank=True, verbose_name="Distanse")
     comment = models.TextField(null=True, blank=True, verbose_name="Kommentar")
 
     date = models.DateField(null=True, blank=True, verbose_name="Dato")
