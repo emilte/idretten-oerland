@@ -25,23 +25,63 @@
             <h1>Statistikk</h1>
         </div>
 
-        {% for name, points in department_points.items %}
-            <div>{{ name }} : {{ points }} </div>
-        {% endfor %}
+        <div class="row justify-content-md-center">
+            <div class="col-md border rounded">
+                Total poeng:
+                {% for department, points in points_list %}
+                    <div>{{ department.name }} : {{ points }} </div>
+                {% endfor %}
+            </div>
+            <div class="col-md border rounded">
+                Gjennomsnitt poeng:
+                {% for department, points in avg %}
+                    <div>{{ department.name }} : {{ points }} </div>
+                {% endfor %}
+            </div>
+            <div class="col-md border rounded">
+                {% if your_points %}
+                    <div class="">
+                        Din avdeling {{ your_points.0.name }}: {{ your_points.1 }}
+                    </div>
+                {% endif %}
+                {% if rank %}
+                    <div class="">
+                        Din avdeling ligger på {{ rank }}. plass
+                    </div>
+                {% endif %}
+                {% if diff %}
+                    <div class="">
+                        Din avdeling ligger {{ diff }} poeng bak 1. plassen
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md border rounded">
+                For å ta igjen 1. plassen kan avdelingen din enten:
+                <ul class="">
+                  <li>Trene {{ facts.0 }} styrkeøkter</li>
+                  <li>Løpe {{ facts.1 }} km</li>
+                  <li>Sykle {{ facts.2 }} km</li>
+                  <li>Gå {{ facts.3 }} km</li>
+                  <li>Svømme {{ facts.4 }} km</li>
+                  <li>Gå {{ facts.5 }} km på ski</li>
+                </ul>
+            </div>
+        </div>
+
 
 
         <div class="">
             <div class="row justify-content-md-center d-flex align-items-end">
-                <div class="col-2">
-                    2 plass
+                <div class="col-2 text-center">
+                    {{ second.0.name }}: {{ second.1 }} poeng
                     <div class="rectangle-2 rounded bg-light"></div>
                 </div>
-                <div class="col-2">
-                    1 plass
+                <div class="col-2 text-center">
+                    {{ first.0.name }}: {{ first.1 }} poeng
                     <div class="rectangle-1 rounded bg-light"></div>
                 </div>
-                <div class="col-2">
-                    3 plass
+                <div class="col-2 text-center">
+                    {{ third.0.name }}: {{ third.1 }} poeng
                     <div class="rectangle-3 rounded bg-light text-dark"></div>
                 </div>
             </div>

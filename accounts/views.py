@@ -68,7 +68,7 @@ class ProfileView(View):
         # ]
 
         return render(request, self.template, {
-            'rank': rank,
+            'rank': rank+1, # Because 0-index
             'diff': diff,
             'facts': facts,
         })
