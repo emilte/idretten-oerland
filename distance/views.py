@@ -98,7 +98,7 @@ class Stats(View):
             else:
                 avg = None
 
-            department_points.append( (department, round(sum_points. 1), avg) )
+            department_points.append( (department, round(sum_points, 1), avg) )
 
             if department == request.user.department:
                 your_points = (department, sum_points, avg)
