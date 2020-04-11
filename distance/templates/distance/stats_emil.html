@@ -25,52 +25,8 @@
             <h1>Statistikk</h1>
         </div>
 
-        <div class="row justify-content-md-center">
-            <div class="col-md border rounded">
-                Total poeng:
-                {% for department, points in points_list %}
-                    <div>{{ department.name }} : {{ points }} </div>
-                {% endfor %}
-            </div>
-            <div class="col-md border rounded">
-                Gjennomsnitt poeng:
-                {% for department, points in avg %}
-                    <div>{{ department.name }} : {{ points }} </div>
-                {% endfor %}
-            </div>
-            <div class="col-md border rounded">
-                {% if your_points %}
-                    <div class="">
-                        Din avdeling {{ your_points.0.name }}: {{ your_points.1 }}
-                    </div>
-                {% endif %}
-                {% if rank %}
-                    <div class="">
-                        Din avdeling ligger på {{ rank }}. plass
-                    </div>
-                {% endif %}
-                {% if diff %}
-                    <div class="">
-                        Din avdeling ligger {{ diff }} poeng bak 1. plassen
-                    </div>
-                {% endif %}
-            </div>
-            <div class="col-md border rounded">
-                For å ta igjen 1. plassen kan avdelingen din enten:
-                <ul class="">
-                  <li>Trene {{ facts.0 }} styrkeøkter</li>
-                  <li>Løpe {{ facts.1 }} km</li>
-                  <li>Sykle {{ facts.2 }} km</li>
-                  <li>Gå {{ facts.3 }} km</li>
-                  <li>Svømme {{ facts.4 }} km</li>
-                  <li>Gå {{ facts.5 }} km på ski</li>
-                </ul>
-            </div>
-        </div>
 
-
-
-        <div class="">
+        <div class="mb-4">
             <div class="row justify-content-md-center d-flex align-items-end">
                 <div class="col-2 text-center">
                     {{ second.0.name }}: {{ second.1 }} poeng
@@ -87,6 +43,57 @@
             </div>
         </div>
 
+        <table id="table-results" class="table text-light">
+            <thead>
+                <tr class="cursor-n-resize">
+                    <th scope="col">Rank</th>
+                    <th scope="col">Avdeling</th>
+                    <th scope="col">#Medlemmer</th>
+                    <th scope="col">Poeng</th>
+                    <th scope="col">Gjennomsnitt</th>
+                    <th scope="col">Poeng bak</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tuple in department_points %}
+                    {% if request.user.department == tuple.0 %}
+                        <tr class="bg-dark text-light">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ tuple.0.name }}</td>
+                            <td>{{ tuple.0.users.all.count }}</td>
+                            <td>{{ tuple.1 }}</td>
+                            <td>{{ tuple.2 | default:'0' }}</td>
+                            <td class="text-danger">{{ tuple.3 }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ tuple.0.name }}</td>
+                            <td>{{ tuple.0.users.all.count }}</td>
+                            <td>{{ tuple.1 }}</td>
+                            <td>{{ tuple.2 | default:'0' }}</td>
+                            <td class="text-danger">{{ tuple.3 }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+
 
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- https://mottie.github.io/tablesorter/docs/ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha256-dtGH1XcAyKopMui5x20KnPxuGuSx9Rs6piJB/4Oqu6I=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $(function() {
+                $("#table-results").tablesorter();
+            });
+
+        })
+    </script>
 {% endblock %}

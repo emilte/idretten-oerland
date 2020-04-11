@@ -92,7 +92,6 @@ class Stats(View):
             department_points[department.name] = sum_points
 
 
-
         return render(request, self.template, {
             'department_points': department_points,
         })
@@ -108,7 +107,7 @@ class Stats2(View):
 
     def get(self, request):
         # Expensive computing
-        department_points = {}
+        department_points = []
         your_points = None
         rank = None
         diff = None
@@ -119,30 +118,38 @@ class Stats2(View):
             for user in department.users.all():
                 sum_points += user.workout_points()
 
-            department_points[department] = sum_points
+            if department.users.all().count() != 0:
+                avg = round(sum_points / department.users.all().count(), 1)
+            else:
+                avg = None
+
+            department_points.append( (department, sum_points, avg) )
+
             if department == request.user.department:
-                your_points = (department, sum_points)
+                your_points = (department, sum_points, avg)
 
-        points_list = list(department_points.items())
+        department_points.sort(key=itemgetter(1), reverse=True)
+        first = department_points[0]
+        second = department_points[1]
+        third = department_points[2]
 
-        points_list.sort(key=itemgetter(1), reverse=True)
-        first = points_list[0]
-        second = points_list[1]
-        third = points_list[2]
+        for x in range(len(department_points)):
+            points_behind = round(department_points[0][1] - department_points[x][1], 1)
+            department_points[x] = (*department_points[x], points_behind)
 
         if request.user.department:
-            rank = getIndexOfTuple(points_list, 0, request.user.department)
+            rank = getIndexOfTuple(department_points, 0, request.user.department)
 
         if rank:
-            diff = round(points_list[0][1] - points_list[rank][1], 1)
+            diff = round(department_points[0][1] - department_points[rank][1], 1)
             facts = [ round(math.ceil(diff/scale), 1) for scale in distance_models.Workout.POINTS.values() if scale != 0 ]
 
-        avg = [ (department, round( points / department.users.all().count() , 1) ) for department, points in points_list ]
+        # avg = [ (department, round( points / department.users.all().count() , 1) ) for department, points in points_list ]
 
 
         return render(request, self.template, {
             'department_points': department_points,
-            'points_list': points_list,
+            # 'points_list': points_list,
             'first': first,
             'second': second,
             'third': third,
@@ -150,5 +157,5 @@ class Stats2(View):
             'rank': rank+1, # Because 0-index
             'diff': diff,
             'facts': facts,
-            'avg': avg,
+            # 'avg': avg,
         })
