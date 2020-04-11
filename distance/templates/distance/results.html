@@ -26,6 +26,7 @@
             <thead>
                 <tr class="cursor-n-resize">
                     <th scope="col">Kallenavn</th>
+                    <th scope="col">Avdeling</th>
                     <th scope="col">Antall økter</th>
                     <th scope="col">Antall km</th>
                     <th scope="col">
@@ -38,6 +39,7 @@
                 {% for user in users %}
                     <tr>
                         <td>{{ user.nickname }}</td>
+                        <td>{{ user.department.short_name }}</td>
                         <td>{{ user.workouts.all.count }}</td>
                         <td>{{ user.workout_sum_km | default:'0' }}</td>
                         <td>{{ user.workout_points }}</td>
