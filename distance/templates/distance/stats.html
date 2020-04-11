@@ -5,25 +5,29 @@
 
 {% block head %}
 <style media="screen">
-    .rectangle-1 {
-        height: 150px;
-    }
-    .rectangle-2 {
-        height: 100px;
-    }
-    .rectangle-3 {
-        height: 50px;
-    }
+  .rectangle-1 {
+    height: 150px;
+    background-color: rgba(185,5,5,1)
+  }
+  .rectangle-2 {
+    height: 100px;
+    background-color: rgba(185,5,5,0.5)
+  }
+  .rectangle-3 {
+    height: 50px;
+    background-color: rgba(185,5,5,0.2)
+  }
 </style>
 {% endblock head %}
 
 {% block body %}
-    <div class="">
+<div class="">
 
 
-        <div id="title" class="text-center">
-            <h1>Statistikk</h1>
-        </div>
+  <div id="title" class="text-center mb-5">
+    <span class="h1">Statistikk</span> <span class="h1"> - {{ your_points.0.name }}</span>
+
+  </div>
 
 
         <div class="mb-4">
