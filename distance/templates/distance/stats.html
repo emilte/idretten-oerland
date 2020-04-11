@@ -7,15 +7,15 @@
 <style media="screen">
   .rectangle-1 {
     height: 150px;
-    background-color: rgba(185,5,5,1)
+    background-color: rgba(185,5,5,1);
   }
   .rectangle-2 {
     height: 100px;
-    background-color: rgba(185,5,5,0.5)
+    background-color: rgba(185,5,5,0.5);
   }
   .rectangle-3 {
     height: 50px;
-    background-color: rgba(185,5,5,0.2)
+    background-color: rgba(185,5,5,0.2);
   }
 </style>
 {% endblock head %}
@@ -30,19 +30,19 @@
   </div>
 
 
-        <div class="mb-4">
+        <div class="mb-5">
             <div class="row justify-content-md-center d-flex align-items-end">
                 <div class="col-2 text-center">
                     {{ second.0.name }}: {{ second.1 }} poeng
-                    <div class="rectangle-2 rounded bg-light"></div>
+                    <div class="rectangle-2 rounded mt-3"></div>
                 </div>
                 <div class="col-2 text-center">
                     {{ first.0.name }}: {{ first.1 }} poeng
-                    <div class="rectangle-1 rounded bg-light"></div>
+                    <div class="rectangle-1 rounded mt-3"></div>
                 </div>
                 <div class="col-2 text-center">
                     {{ third.0.name }}: {{ third.1 }} poeng
-                    <div class="rectangle-3 rounded bg-light text-dark"></div>
+                    <div class="rectangle-3 rounded mt-3"></div>
                 </div>
             </div>
         </div>
