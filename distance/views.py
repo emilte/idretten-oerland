@@ -118,8 +118,10 @@ class Stats(View):
         if rank:
             diff = round(department_points[0][1] - department_points[rank][1], 1)
             facts = [ round(math.ceil(diff/scale), 1) for scale in distance_models.Workout.POINTS.values() if scale != 0 ]
+            rank += 1 # MUST BE LAST
 
         # avg = [ (department, round( points / department.users.all().count() , 1) ) for department, points in points_list ]
+
 
 
         return render(request, self.template, {
@@ -128,7 +130,7 @@ class Stats(View):
             'second': second,
             'third': third,
             'your_points': your_points,
-            'rank': rank+1, # Because 0-index
+            'rank': rank, # Because 0-index
             'diff': diff,
             'facts': facts,
         })
