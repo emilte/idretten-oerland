@@ -81,31 +81,6 @@ class Stats(View):
     template = 'distance/stats.html'
 
     def get(self, request):
-        departments = account_models.Department.objects.all()
-        department_points = {}
-
-        for department in departments:
-            users = department.users.all()
-            sum_points = 0
-            for user in users:
-                sum_points += user.workout_points()
-            department_points[department.name] = sum_points
-
-
-        return render(request, self.template, {
-            'department_points': department_points,
-        })
-
-
-stats_dec = [
-    login_required,
-    permission_required('distance.view_workout', login_url='forbidden'),
-]
-@method_decorator(results_dec, name='dispatch')
-class Stats2(View):
-    template = 'distance/stats_emil.html'
-
-    def get(self, request):
         # Expensive computing
         department_points = []
         your_points = None
@@ -149,7 +124,6 @@ class Stats2(View):
 
         return render(request, self.template, {
             'department_points': department_points,
-            # 'points_list': points_list,
             'first': first,
             'second': second,
             'third': third,
@@ -157,5 +131,4 @@ class Stats2(View):
             'rank': rank+1, # Because 0-index
             'diff': diff,
             'facts': facts,
-            # 'avg': avg,
         })
