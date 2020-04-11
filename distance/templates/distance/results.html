@@ -37,13 +37,23 @@
             </thead>
             <tbody>
                 {% for user in users %}
-                    <tr>
-                        <td>{{ user.nickname }}</td>
-                        <td>{{ user.department.short_name }}</td>
-                        <td>{{ user.workouts.all.count }}</td>
-                        <td>{{ user.workout_sum_km | default:'0' }}</td>
-                        <td>{{ user.workout_points }}</td>
-                    </tr>
+                    {% if request.user == user %}
+                        <tr class="bg-dark">
+                            <td>{{ user.nickname }}</td>
+                            <td>{{ user.department.short_name }}</td>
+                            <td>{{ user.workouts.all.count }}</td>
+                            <td>{{ user.workout_sum_km | default:'0' }}</td>
+                            <td>{{ user.workout_points }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{ user.nickname }}</td>
+                            <td>{{ user.department.short_name }}</td>
+                            <td>{{ user.workouts.all.count }}</td>
+                            <td>{{ user.workout_sum_km | default:'0' }}</td>
+                            <td>{{ user.workout_points }}</td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>
