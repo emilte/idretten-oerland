@@ -17,6 +17,9 @@ class PermissionCode(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, null=False, blank=False)
     secret = models.CharField(max_length=200, null=False, blank=False)
 
+    def __str__(self):
+        return f"PermissionCode ({self.group}:{self.secret})"
+
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
@@ -40,8 +43,35 @@ class Department(models.Model):
     name = models.CharField(max_length=200, null=True, blank=False, verbose_name="Avdeling")
     short_name = models.CharField(max_length=50, null=True, blank=False, verbose_name="Forkortelse")
 
+    class Meta:
+        ordering = ['name']
+        verbose_name = "Avdeling"
+        verbose_name_plural = "Avdelinger"
+
     def __str__(self):
         return self.short_name
+
+    def member_count(self):
+        return self.users.all().count()
+
+    def workout_sum_km(self):
+        km = 0
+        for member in self.users.all():
+            km += member.workout_sum_km()
+        return round(km, 1)
+
+    def workout_sum_points(self):
+        points = 0
+        for member in self.users.all():
+            points += member.workout_sum_points()
+        return round(points, 1)
+
+    def workout_avg_points(self):
+        try:
+            return round(self.workout_sum_km()/self.member_count(), 1)
+        except Exception as e:
+            return None
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     MALE = "M"
@@ -91,16 +121,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def workout_sum_km(self):
         km = self.workouts.all().aggregate(result=Sum('distance'))['result'] or 0
-        return round(km , 1)
+        return round(km, 1)
 
-    def workout_points(self):
-        p = 0
+    def workout_sum_points(self):
+        points = 0
         for workout in self.workouts.all():
-            if workout.type == distance_models.Workout.STRENGTH:
-                p += distance_models.Workout.POINTS[workout.type]
-            else:
-                p += workout.distance * distance_models.Workout.POINTS[workout.type]
-        return round(p, 1)
+            points += workout.points()
+        return round(points, 1)
 
     def serialize(self):
         jayson = {}

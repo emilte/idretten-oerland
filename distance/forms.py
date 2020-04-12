@@ -30,6 +30,14 @@ class WorkoutForm(forms.ModelForm):
         self.fields['comment'].widget.attrs.update({'rows': 5})
         self.fields['distance'].widget.attrs.update({'placeholder': 'Eks: 8,2 km'})
 
+    def save(self, commit=True):
+        instance = super(WorkoutForm, self).save(commit=False)
+        if self.cleaned_data['type'] == distance_models.Workout.STRENGTH:
+            instance.distance = 0
+        if commit:
+            instance.save()
+        return instance
+
 
 #
 # class ExampleModelForm(forms.ModelForm):

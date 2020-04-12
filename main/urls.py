@@ -32,7 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('distanse/', include('distance.urls')),
     # path('emil/', include('emil.urls')),
-    path('stefan/', include('stefan.urls')),
+    # path('stefan/', include('stefan.urls')),
     path('accounts/', include('accounts.urls')),
 
     # path('api/users/', emil_api.ExtendedAPI.as_view(model=User), name="api_users"),

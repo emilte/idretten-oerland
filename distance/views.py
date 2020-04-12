@@ -82,55 +82,32 @@ class Stats(View):
 
     def get(self, request):
         # Expensive computing
+
+        # Create table about department points. Sort sum_points (descending)
         department_points = []
-        your_points = None
-        rank = None
-        diff = None
-        facts = None
-
         for department in account_models.Department.objects.all():
-            sum_points = 0
-            for user in department.users.all():
-                sum_points += user.workout_points()
-
-            if department.users.all().count() != 0:
-                avg = round(sum_points / department.users.all().count(), 1)
-            else:
-                avg = None
-
-            department_points.append( (department, round(sum_points, 1), avg) )
-
-            if department == request.user.department:
-                your_points = (department, sum_points, avg)
-
+            department_points.append( (department, department.workout_sum_points(), department.workout_avg_points()) )
         department_points.sort(key=itemgetter(1), reverse=True)
-        first = department_points[0]
-        second = department_points[1]
-        third = department_points[2]
 
-        for x in range(len(department_points)):
+        # Calculate points behind 1st place for all departments
+        for x in range(1, len(department_points)):
             points_behind = round(department_points[0][1] - department_points[x][1], 1)
             department_points[x] = (*department_points[x], points_behind)
 
+        # Find info about rank, if user is member of a department
         if request.user.department:
             rank = getIndexOfTuple(department_points, 0, request.user.department)
-
-        if rank:
             diff = round(department_points[0][1] - department_points[rank][1], 1)
             facts = [ round(math.ceil(diff/scale), 1) for scale in distance_models.Workout.POINTS.values() if scale != 0 ]
-            rank += 1 # MUST BE LAST
-
-        # avg = [ (department, round( points / department.users.all().count() , 1) ) for department, points in points_list ]
-
-
+            rank += 1 # Correct for 0-index
+        else:
+            rank = None
+            diff = None
+            facts = None
 
         return render(request, self.template, {
             'department_points': department_points,
-            'first': first,
-            'second': second,
-            'third': third,
-            'your_points': your_points,
-            'rank': rank, # Because 0-index
+            'rank': rank,
             'diff': diff,
             'facts': facts,
         })

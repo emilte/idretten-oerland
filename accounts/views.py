@@ -33,8 +33,7 @@ def getIndexOfTuple(l, index, value):
         if t[index] == value:
             return pos
 
-    # Matches behavior of list.index
-    raise ValueError("list.index(x): x not in list")
+    return None
 
 
 
@@ -52,23 +51,15 @@ class ProfileView(View):
         # Maybe implement on client side instead
         users = []
         for user in User.objects.all():
-            users.append( (user.id, user.workout_points() ) )
+            users.append( (user.id, user.workout_sum_points() ) )
 
         users.sort(key=itemgetter(1), reverse=True)
         rank = getIndexOfTuple(users, 0, request.user.id)
         diff = users[0][1] - users[rank][1]
         facts = [ math.ceil(diff/scale) for scale in distance_models.Workout.POINTS.values() if scale != 0 ]
-        # facts = [
-        #     math.ceil(diff / distance_models.Workout.STRENGTH_P() ),
-        #     math.ceil(diff / distance_models.Workout.RUNNING_P() ),
-        #     math.ceil(diff / distance_models.Workout.CYCLING_P() ),
-        #     math.ceil(diff / distance_models.Workout.WALKING_P() ),
-        #     math.ceil(diff / distance_models.Workout.SWIMMING_P() ),
-        #     math.ceil(diff / distance_models.Workout.SKIING_P() ),
-        # ]
 
         return render(request, self.template, {
-            'rank': rank+1, # Because 0-index
+            'rank': rank+1, # Correct for 0-index
             'diff': diff,
             'facts': facts,
         })

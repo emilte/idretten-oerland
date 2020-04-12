@@ -34,7 +34,7 @@ class Workout(models.Model):
     }
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=False, related_name="workouts", verbose_name="Bruker")
     type = models.IntegerField(choices=TYPES, default=0, verbose_name="Treningstype")
-    distance = models.FloatField(null=False, blank=True, verbose_name="Distanse")
+    distance = models.FloatField(null=True, blank=True, verbose_name="Distanse")
     comment = models.TextField(null=True, blank=True, verbose_name="Kommentar")
 
     date = models.DateField(null=True, blank=True, verbose_name="Dato")
@@ -46,13 +46,22 @@ class Workout(models.Model):
         verbose_name_plural = "Treningsøkter"
 
     def __str__(self):
-        return f"{self.user}, {self.get_type_display()}, {self.date}"
+        return f"{self.user}, {self.get_type_display()} ({self.distance} km), {self.date}"
+
+    def points(self):
+        p = 0
+        if self.type == Workout.STRENGTH:
+            p = Workout.POINTS[self.type]
+        elif self.distance:
+            p = self.distance * Workout.POINTS[self.type]
+        return round(p, 1)
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = timezone.now()
 
         return super(type(self), self).save(*args, **kwargs)
+
 
     @classmethod
     def NOTHING_P(cls):
