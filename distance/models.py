@@ -16,12 +16,12 @@ class Workout(models.Model):
     SKIING = 6
     TYPES = [
         (NOTHING, '------'),
-        (STRENGTH, 'styrke'),
-        (RUNNING, 'løping'),
-        (CYCLING, 'sykling'),
-        (WALKING, 'gåing'),
-        (SWIMMING, 'svømming'),
-        (SKIING, 'ski'),
+        (STRENGTH, 'Styrke'),
+        (RUNNING, 'Løping'),
+        (CYCLING, 'Sykling'),
+        (WALKING, 'Gåing'),
+        (SWIMMING, 'Svømming'),
+        (SKIING, 'Ski'),
     ]
     POINTS = {
         NOTHING: 0,
