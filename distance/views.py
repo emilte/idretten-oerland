@@ -46,7 +46,7 @@ class Register(View):
             answer.user = request.user
             answer.save()
             messages.add_message(request, messages.SUCCESS, 'Økten ble lagret')
-            return redirect('stefan:index')
+            return redirect('accounts:profile')
 
         return render(request, self.template, {'form': form})
 
