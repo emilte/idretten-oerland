@@ -6,17 +6,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ALLOWED_HOSTS = ['idretten-oerland.herokuapp.com']
 
-DEBUG = True
-
 # For whitenoise, heroku
 # Extra lookup directories for collectstatic to find static files
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'staticroot'),
 )
 
 # Values are set in heroku dashboard
-SECRET_KEY = os.environ.get('SECRET_KEY')
-
+SECRET_KEY = os.environ.get('SECRET_KEY') or "Not set"
+DEBUG = os.environ.get('DEBUG') or False
 
 
 #  Add configuration for static files storage using whitenoise, heroku
@@ -30,7 +28,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django_user_agents.middleware.UserAgentMiddleware', # User agent
     'whitenoise.middleware.WhiteNoiseMiddleware', # whitenoise, heroku
 ]
 

@@ -16,18 +16,9 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+HEROKU = os.environ.get('HEROKU')
 
-CUSTOM_SETTINGS = ["heroku_settings"] # heroku_settings
-# CUSTOM_SETTINGS = ["dev_settings", "local_settings"] # local_settings
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z=*134)eo1fn$lilm)fouy(22ftu)(&wp=7c(=h1a$(pg**^&5'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = False
 ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = 'accounts:profile'
@@ -39,6 +30,18 @@ STATIC_URL = '/static/'
 
 # Custom User model
 AUTH_USER_MODEL = 'accounts.User'
+
+# Production settings:
+SECURE_HSTS_SECONDS = 60 # TODO: Find a decent value
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = "DENY"
+
 
 DATE_INPUT_FORMATS = [
     '%d-%m-%Y',
@@ -94,9 +97,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'main.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -104,9 +104,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -124,9 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'nb'
 
 TIME_ZONE = 'Europe/Oslo'
@@ -140,18 +134,22 @@ USE_TZ = True
 # Custom settings that overwrite this.
 try:
     from .local_settings import *
+    print("== IMPORTED: local_settings ==")
 except:
     print("== local_settings was not imported ==")
 
-if "heroku_settings" in CUSTOM_SETTINGS:
-    from .heroku_settings import *
-    print("== IMPORTED: heroku_settings ==")
-    # print("== heroku_settings was not imported ==")
-
-if "dev_settings" in CUSTOM_SETTINGS:
-    from .dev_settings import *
-    print("== IMPORTED: dev_settings ==")
-    # print("== dev_settings was not imported ==")
+if HEROKU:
+    try:
+        from .heroku_settings import *
+        print("== IMPORTED: heroku_settings ==")
+    except:
+        print("== heroku_settings was not imported ==")
+else:
+    try:
+        from .dev_settings import *
+        print("== IMPORTED: dev_settings ==")
+    except:
+        print("== dev_settings was not imported ==")
 
 
 # Static files (CSS, JavaScript, Images)
