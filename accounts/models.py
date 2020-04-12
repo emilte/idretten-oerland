@@ -86,7 +86,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     first_name = models.CharField(max_length=60, null=True, blank=True, verbose_name="Fornavn")
     last_name = models.CharField(max_length=150, null=True, blank=True, verbose_name="Etternavn")
-    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Avdeling", related_name="users")
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Avdeling", related_name="members")
     nickname = models.CharField(max_length=150, null=True, blank=False, verbose_name="Kallenavn")
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default=None, null=True, blank=True, verbose_name="Kjønn")
     is_active = models.BooleanField(default=True)
