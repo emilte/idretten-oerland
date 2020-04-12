@@ -105,7 +105,7 @@ class SignUpView(View):
                 if code == permission_code.secret:
                     user.groups.add(permission_code.group)
 
-            return redirect('stefan:index')
+            return redirect('home')
         else:
             return render(request, self.template, {'form': form})
 
