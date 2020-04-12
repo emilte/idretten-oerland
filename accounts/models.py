@@ -40,7 +40,7 @@ class UserManager(BaseUserManager):
         return use
 
 class Department(models.Model):
-    name = models.CharField(max_length=200, null=True, blank=False, verbose_name="Avdeling")
+    name = models.CharField(max_length=200, null=True, blank=False, verbose_name="Avdeling", unique=True)
     short_name = models.CharField(max_length=50, null=True, blank=False, verbose_name="Forkortelse")
 
     class Meta:
