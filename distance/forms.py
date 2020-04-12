@@ -32,7 +32,7 @@ class WorkoutForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super(WorkoutForm, self).save(commit=False)
-        if self.cleaned_data['type'] == distance_models.Workout.STRENGTH:
+        if self.cleaned_data['type'] == distance_models.Workout.STRENGTH or self.cleaned_data['distance'] == None:
             instance.distance = 0
         if commit:
             instance.save()
