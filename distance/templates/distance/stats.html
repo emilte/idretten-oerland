@@ -24,169 +24,27 @@
 {% endblock head %}
 
 {% block body %}
-<div class="">
+    <div class="">
 
-
-    <div class="h1 text-center mb-5">
-        Statistikk
-    </div>
-
-
-    <div class="mb-5">
-        <div class="row justify-content-md-center d-flex align-items-end">
-            <div class="col-2 text-center">
-                {{ department_points.1.0.name }}: {{ department_points.0.1 }} poeng
-                <div class="rectangle-2 rounded mt-3"></div>
-            </div>
-            <div class="col-2 text-center">
-                {{ department_points.0.0.name }}: {{ department_points.0.1 }} poeng
-                <div class="rectangle-1 rounded mt-3"></div>
-            </div>
-            <div class="col-2 text-center">
-                {{ department_points.2.0.name }}: {{ department_points.0.1 }} poeng
-                <div class="rectangle-3 rounded mt-3"></div>
-            </div>
+        <div class="h1 text-center mb-5">
+            Statistikk
         </div>
-    </div>
 
-    <table id="table-results" class="table text-light">
-        <thead>
-            <tr class="cursor-n-resize">
-                <th scope="col">Rank</th>
-                <th scope="col">Avdeling</th>
-                <th scope="col">#Medlemmer</th>
-                <th scope="col">Poeng</th>
-                <th scope="col">Gjennomsnitt</th>
-                <th scope="col">Poeng bak</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for tuple in department_points %}
-                {% if request.user.department == tuple.0 %}
-                    <tr class="bg-dark text-light">
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ tuple.0.name }}</td>
-                        <td>{{ tuple.0.users.all.count }}</td>
-                        <td>{{ tuple.1 }}</td>
-                        <td>{{ tuple.2 | default:'0' }}</td>
-                        <td class="text-danger">{{ tuple.3 }}</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ tuple.0.name }}</td>
-                        <td>{{ tuple.0.users.all.count }}</td>
-                        <td>{{ tuple.1 }}</td>
-                        <td>{{ tuple.2 | default:'0' }}</td>
-                        <td class="text-danger">{{ tuple.3 }}</td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-
-    {% if rank == 1 %}
-        <div class="h1">
-            Gratulerer, dere leder!
-        </div>
-    {% elif rank > 1 %}
-        <div id="carousel-workout" class="carousel slide container" data-ride="carousel">
-
-        <ol class="carousel-indicators">
-            <li data-target="#carousel-workout" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-workout" data-slide-to="1"></li>
-            <li data-target="#carousel-workout" data-slide-to="2"></li>
-            <li data-target="#carousel-workout" data-slide-to="3"></li>
-            <li data-target="#carousel-workout" data-slide-to="4"></li>
-            <li data-target="#carousel-workout" data-slide-to="5"></li>
-        </ol>
-
-        <div class="carousel-inner rounded">
-
-            <div class="carousel-item active">
-                <img src="{% static "distance/images/crossfit.png" %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption">
-                    <div class="mb-5">
-                        <div class="h1">
-                            Styrke
-                        </div>
-                        <div class="h5">
-                            {{ facts.0 }} økter for å ta igjen 1 plassen
-                        </div>
-                    </div>
+        <div class="mb-5">
+            <div class="row justify-content-md-center d-flex align-items-end">
+                <div class="col-2 text-center">
+                    {{ department_points.1.0.name }}: {{ department_points.0.1 }} poeng
+                    <div class="rectangle-2 rounded mt-3"></div>
+                </div>
+                <div class="col-2 text-center">
+                    {{ department_points.0.0.name }}: {{ department_points.0.1 }} poeng
+                    <div class="rectangle-1 rounded mt-3"></div>
+                </div>
+                <div class="col-2 text-center">
+                    {{ department_points.2.0.name }}: {{ department_points.0.1 }} poeng
+                    <div class="rectangle-3 rounded mt-3"></div>
                 </div>
             </div>
-
-            <div class="carousel-item">
-                <img src="{% static "distance/images/running.png" %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <div class="mb-5">
-                        <div class="h1">
-                            Løping
-                        </div>
-                        <div class="h5">
-                            {{ facts.1 }} km for å ta igjen 1 plassen
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src="{% static "distance/images/cycling.png" %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <div class="mb-5">
-                        <div class="h1">
-                            Sykling
-                        </div>
-                        <div class="h5">
-                            {{ facts.2 }} km for å ta igjen 1 plassen
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src="{% static "distance/images/hiking.png" %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <div class="mb-5">
-                        <div class="h1">
-                            Gåing
-                        </div>
-                        <div class="h5">
-                            {{ facts.3 }} km for å ta igjen 1 plassen
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src="{% static "distance/images/swimming.png" %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <div class="mb-5">
-                        <div class="h1">
-                            Svømming
-                        </div>
-                        <div class="h5">
-                            {{ facts.4 }} km for å ta igjen 1 plassen
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src="{% static "distance/images/skiing.png" %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <div class="mb-5">
-                        <div class="h1">
-                            Langrenn
-                        </div>
-                        <div class="h5">
-                            {{ facts.5 }} km for å ta igjen 1 plassen
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <table id="table-results" class="table text-light">
@@ -224,87 +82,133 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="container mt-5">
 
-        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-          <ol class="carousel-indicators">
-            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="5"></li>
-          </ol>
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="{% static "crossfit.png" %}" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h1>Styrke</h1>
-                <p>Din avdeling trenger å trene XXX ganger tilsammen</p>
-              </div>
+        {% if rank == 1 %}
+            <div class="h1">
+                Gratulerer, dere leder!
             </div>
-            <div class="carousel-item">
-              <img src="{% static "running.png" %}" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h1>Løping</h1>
-                <p>Din avdeling trenger å løpe XXX km tilsammen</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="{% static "cycling.png" %}" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h1>Sykling</h1>
-                <p>Din avdeling trenger å sykle XXX km tilsammen</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="{% static "hiking.png" %}" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h1>Gåing</h1>
-                <p>Din avdeling trenger å gå XXX km tilsammen</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="{% static "swimming.png" %}" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h1>Svømming</h1>
-                <p>Din avdeling trenger å svømme XXX km tilsammen</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="{% static "skiing.png" %}" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h1>Langrenn</h1>
-                <p>Din avdeling trenger å stå på ski XXX km tilsammen</p>
-              </div>
-            </div>
-          </div>
+        {% elif rank > 1 %}
+            <div id="carousel-workout" class="carousel slide container" data-ride="carousel">
 
-        </div>
-          <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-      </div>
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-workout" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-workout" data-slide-to="1"></li>
+                    <li data-target="#carousel-workout" data-slide-to="2"></li>
+                    <li data-target="#carousel-workout" data-slide-to="3"></li>
+                    <li data-target="#carousel-workout" data-slide-to="4"></li>
+                    <li data-target="#carousel-workout" data-slide-to="5"></li>
+                </ol>
 
-</div>
-{% endblock %}
+                <div class="carousel-inner rounded">
+
+                    <div class="carousel-item active">
+                        <img src="{% static "distance/images/crossfit.png" %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption">
+                            <div class="mb-5">
+                                <div class="h1">
+                                    Styrke
+                                </div>
+                                <div class="h5">
+                                    {{ facts.0 }} økter for å ta igjen 1 plassen
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="{% static "distance/images/running.png" %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="mb-5">
+                                <div class="h1">
+                                    Løping
+                                </div>
+                                <div class="h5">
+                                    {{ facts.1 }} km for å ta igjen 1 plassen
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="{% static "distance/images/cycling.png" %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="mb-5">
+                                <div class="h1">
+                                    Sykling
+                                </div>
+                                <div class="h5">
+                                    {{ facts.2 }} km for å ta igjen 1 plassen
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="{% static "distance/images/hiking.png" %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="mb-5">
+                                <div class="h1">
+                                    Gåing
+                                </div>
+                                <div class="h5">
+                                    {{ facts.3 }} km for å ta igjen 1 plassen
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="{% static "distance/images/swimming.png" %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="mb-5">
+                                <div class="h1">
+                                    Svømming
+                                </div>
+                                <div class="h5">
+                                    {{ facts.4 }} km for å ta igjen 1 plassen
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="{% static "distance/images/skiing.png" %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="mb-5">
+                                <div class="h1">
+                                    Langrenn
+                                </div>
+                                <div class="h5">
+                                    {{ facts.5 }} km for å ta igjen 1 plassen
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <a class="carousel-control-prev" href="#carousel-workout" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-workout" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock body %}
 
 {% block scripts %}
-<!-- https://mottie.github.io/tablesorter/docs/ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha256-dtGH1XcAyKopMui5x20KnPxuGuSx9Rs6piJB/4Oqu6I=" crossorigin="anonymous"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
+    <!-- https://mottie.github.io/tablesorter/docs/ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha256-dtGH1XcAyKopMui5x20KnPxuGuSx9Rs6piJB/4Oqu6I=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
 
-        $(function() {
-            $("#table-results").tablesorter();
-        });
+            $(function() {
+                $("#table-results").tablesorter();
+            });
 
-    })
-</script>
-{% endblock %}
+        })
+    </script>
+{% endblock scripts %}
