@@ -15,6 +15,11 @@ EMAILS = [
     'stefan.pakaski@gmail.com',
 ]
 
+DEVS = [
+    (8888, 'emilte'),
+    (9999, 'paskern'),
+]
+
 PASSWORD = "Django123"
 
 class Command(BaseCommand):
@@ -25,20 +30,20 @@ class Command(BaseCommand):
         no = ['no', 'n']
         print("== This command will:")
         print("\t 1. Set following users as superuser:")
-        for email in EMAILS:
-            print(f"\t\t {email}")
+        for dev in DEVS:
+            print(f"\t\t {dev[1]}")
 
         print("\n== Are you sure? DOUBLE-CHECK that this is not production server ==")
 
         while answer not in yes+no:
-            answer = input("Type 'y' or 'n': ").lower()
+            answer = input("Type (Y)es or (N)o: ").lower()
 
         return answer in yes
 
     def f(self):
-        # Set super devs for EMAILS:
-        for email in EMAILS:
-            user, created = User.objects.get_or_create(email=email)
+        # Set super devs for NICKNAMES:
+        for dev in DEVS:
+            user, created = User.objects.get_or_create(employee_nr=dev[0], nickname=dev[1])
             user.is_staff = True
             user.is_superuser = True
             user.set_password(PASSWORD)

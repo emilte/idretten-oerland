@@ -20,7 +20,7 @@ class PermissionCode(models.Model):
     def __str__(self):
         return f"PermissionCode ({self.group}:{self.secret})"
 
-class UserManager(BaseUserManager):
+class UserManagerOld(BaseUserManager):
     use_in_migrations = True
 
     def create_user(self, email, password=None, **kwargs):
@@ -73,6 +73,25 @@ class Department(models.Model):
             return None
 
 
+class UserManager(BaseUserManager):
+    use_in_migrations = True
+
+    def create_user(self, employee_nr, password=None, **kwargs):
+        if not employee_nr:
+            raise ValueError('Users must have an employee number')
+        user = self.model(employee_nr=employee_nr, **kwargs)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, employee_nr, password, **kwargs):
+        user = self.create_user(employee_nr=employee_nr, password=password, **kwargs)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return use
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     MALE = "M"
     FEMALE = "F"
@@ -83,11 +102,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         (FEMALE, "Kvinne"),
         (OTHER, "Annet"),
     ]
-    email = models.EmailField(max_length=254, unique=True)
-    first_name = models.CharField(max_length=60, null=True, blank=True, verbose_name="Fornavn")
-    last_name = models.CharField(max_length=150, null=True, blank=True, verbose_name="Etternavn")
+    # email = models.EmailField(max_length=254, unique=True)
+    employee_nr = models.PositiveIntegerField(unique=True, verbose_name="Ansatt nummer")
+    # first_name = models.CharField(max_length=60, null=True, blank=True, verbose_name="Fornavn")
+    # last_name = models.CharField(max_length=150, null=True, blank=True, verbose_name="Etternavn")
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Avdeling", related_name="users")
-    nickname = models.CharField(max_length=150, null=True, blank=False, verbose_name="Kallenavn")
+    nickname = models.CharField(max_length=150, unique=True, null=True, blank=False, verbose_name="Kallenavn")
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default=None, null=True, blank=True, verbose_name="Kjønn")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -96,28 +116,25 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'employee_nr'
     REQUIRED_FIELDS = []
 
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
-        ordering = ['email']
+        ordering = ['employee_nr']
 
     def __str__(self):
-        return self.get_full_name() or self.email
+        return f"{self.employee_nr} - {self.nickname}"
 
     def get_full_name(self):
-        if self.first_name and self.last_name:
-            return f"{self.first_name} {self.last_name}"
-        else:
-            return None
+        return "deprecated: get_full_name"
 
     def get_username(self):
-        return self.email
+        return self.employee_nr
 
     def get_short_name(self):
-        return self.first_name
+        return "deprecated: get_short_name"
 
     def workout_sum_km(self):
         km = self.workouts.all().aggregate(result=Sum('distance'))['result'] or 0
@@ -132,7 +149,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def serialize(self):
         jayson = {}
         jayson['id'] = self.id
-        jayson['email'] = self.email
+        # jayson['email'] = self.email
         jayson['nickname'] = self.nickname
         jayson['first_name'] = self.first_name
         jayson['last_name'] = self.last_name

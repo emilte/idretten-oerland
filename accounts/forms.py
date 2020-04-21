@@ -20,9 +20,10 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = [
-            'email',
-            'first_name',
-            'last_name',
+            # 'email',
+            # 'first_name',
+            # 'last_name',
+            'employee_nr',
             'nickname',
             'department',
             'sex',
@@ -43,8 +44,9 @@ class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'first_name',
-            'last_name',
+            # 'first_name',
+            # 'last_name',
+            'employee_nr',
             'nickname',
             'department',
         ]
@@ -60,12 +62,15 @@ class EditUserForm(forms.ModelForm):
 class CustomAuthenticationForm(AuthenticationForm): # Not currently in use. Can be passed to login view
     error_messages = dict(AuthenticationForm.error_messages) # Inherit from parent. invalid_login and inactive
 
-    def confirm_login_allowed(self, user):
-        if not user.is_active:
-            raise forms.ValidationError(self.error_messages['inactive'], code='inactive')
+    # Override username to be compatible with employee_nr
+    username = forms.IntegerField(min_value=0, widget=forms.NumberInput(attrs={'autofocus': True}))
 
-        if not user.is_authenticated:
-            raise forms.ValidationError(self.error_messages['invalid_login'], code='invalid_login')
+    def __init__(self, *args, **kwargs):
+        super(type(self), self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
+
 
 class CustomAuthForm(AuthenticationForm):
     # Inherited fields:

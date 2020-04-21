@@ -31,28 +31,28 @@ class UserAdmin(auth_admin.UserAdmin):
     # Fields shown in user detail: admin/accounts//user/'id'/change
     fieldsets = [
         [None,              {'fields': ['password']}],
-        ['Personal info',   {'fields': ['first_name', 'last_name', 'email', 'department' ] }],
+        ['Personal info',   {'fields': ['department'] }],
         ['Permissions',     {'fields': ['is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions']}],
         ['Important dates', {'fields': ['last_login', 'date_joined']}],
     ]
     # No idea what this is for
     limited_fieldsets = [
-        [None,              {'fields':   ['email',]}],
-        ['Personal info',   {'fields': ['first_name', 'last_name']}],
+        [None,              {'fields':   []}],
+        ['Personal info',   {'fields': []}],
         ['Important dates', {'fields': ['last_login', 'date_joined']}],
     ]
     # Not sure what this is for
     add_fieldsets = [
         [None, {
             'classes': ['wide',],
-            'fields': ['email', 'first_name', 'last_name', 'password1', 'password2']}
+            'fields': ['password1', 'password2']}
         ],
     ]
 
-    list_display = ['email', 'first_name', 'last_name', 'department', 'sex', 'workout_sum_points', 'is_staff', 'is_superuser']
+    list_display = ['employee_nr', 'department', 'sex', 'workout_sum_points', 'is_staff', 'is_superuser']
     list_filter = ['is_staff', 'is_superuser', 'is_active', 'department', 'sex']
-    search_fields = ['first_name', 'last_name', 'email']
-    ordering = ['email']
+    search_fields = ['employee_nr', 'nickname']
+    ordering = ['employee_nr']
     readonly_fields = ['last_login', 'date_joined']
     filter_horizontal = ['groups', 'user_permissions']
     actions = [make_normal, make_staff, make_superuser]

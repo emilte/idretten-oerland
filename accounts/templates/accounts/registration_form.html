@@ -36,9 +36,12 @@
                                 <small class="text-secondary">{{ field.help_text }}</small>
                             {% endif %}
                             {% for error in field.errors %}
-                                <p class="error">{{ error }}</p>
+                                <div class="text-danger">{{ error }}</div>
                             {% endfor %}
                         </p>
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="text-danger">{{ error }}</div>
                     {% endfor %}
                     <button type="submit" class="btn btn-lg btn-primary btn-block">Opprett bruker</button>
                 </form>

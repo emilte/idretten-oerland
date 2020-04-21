@@ -6,9 +6,10 @@ import math
 
 from django.views import View
 from django.db.models import Q
-from django.utils import timezone
 from django.urls import reverse
 from django.conf import settings
+from django.utils import timezone
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.db.models import Avg, Count, Min, Sum
 from django.contrib.auth import views as auth_views
@@ -79,6 +80,7 @@ class EditProfileView(View):
         form = self.form_class(data=request.POST, instance=request.user)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS, f"Profilen din har blitt oppdatert")
             return redirect('accounts:profile')
         else:
             return render(request, self.template, {'form': form})
@@ -94,16 +96,16 @@ class SignUpView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(email=email, password=raw_password)
+            user = form.save()
             login(request, user)
 
-            code = form.cleaned_data['code']
-            for permission_code in account_models.PermissionCode.objects.all():
-                if code == permission_code.secret:
-                    user.groups.add(permission_code.group)
+            try:
+                code = form.cleaned_data['code']
+                group = account_models.PermissionCode.objects.get(secret=code).group
+                user.groups.add(group)
+                messages.add_message(request, messages.SUCCESS, f"Med koden '{code}' har du blitt lagt til i avdeling: {group.name}")
+            except:
+                messages.add_message(request, messages.ERROR, f"Koden '{code}' tilsvarer ingen avdeling. Ta kontakt med admin")
 
             return redirect('home')
         else:
@@ -116,6 +118,7 @@ class DeleteUserView(View):
     def get(self, request, *args, **kwargs):
         request.user.delete()
         logout(request)
+        messages.add_message(request, messages.SUCCESS, f"Brukeren din har blitt slettet fra systemet")
         return redirect('home')
 
 
