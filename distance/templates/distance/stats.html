@@ -9,16 +9,16 @@
             background-color: rgba(255,0,0,0.2);
         }
         .rectangle-1 {
-            height: 150px;
             background-color: rgba(185,5,5,1);
         }
         .rectangle-2 {
-            height: 100px;
             background-color: rgba(185,5,5,0.5);
         }
         .rectangle-3 {
-            height: 50px;
             background-color: rgba(185,5,5,0.2);
+        }
+        .podium {
+            min-height: 214px;
         }
     </style>
 {% endblock head %}
@@ -31,57 +31,65 @@
         </div>
 
         <div class="mb-5">
-            <div class="row justify-content-md-center d-flex align-items-end">
-                <div class="col-2 text-center">
-                    {{ department_points.1.0.name }}: {{ department_points.1.1 }} poeng
+            <div class="row px-3 justify-content-center d-flex align-items-end podium">
+                <div class="col-4 col-sm-2 px-1 text-center">
+                    <div id="text-2" class="invisible">
+                        {{ department_points.1.0.name }}: {{ department_points.1.1 }} poeng
+                    </div>
                     <div class="rectangle-2 rounded mt-3"></div>
                 </div>
-                <div class="col-2 text-center">
-                    {{ department_points.0.0.name }}: {{ department_points.0.1 }} poeng
+                <div class="col-4 col-sm-2 px-1 text-center">
+                    <div id="text-1" class="invisible">
+                        {{ department_points.0.0.name }}: {{ department_points.0.1 }} poeng
+                    </div>
                     <div class="rectangle-1 rounded mt-3"></div>
                 </div>
-                <div class="col-2 text-center">
-                    {{ department_points.2.0.name }}: {{ department_points.2.1 }} poeng
+                <div class="col-4 col-sm-2 px-1 text-center">
+                    <div id="text-3" class="invisible">
+                        {{ department_points.2.0.name }}: {{ department_points.2.1 }} poeng
+                    </div>
                     <div class="rectangle-3 rounded mt-3"></div>
                 </div>
             </div>
         </div>
 
-        <table id="table-results" class="table text-light">
-            <thead>
-                <tr class="cursor-n-resize">
-                    <th scope="col">Rank</th>
-                    <th scope="col">Avdeling</th>
-                    <th scope="col">#Medlemmer</th>
-                    <th scope="col">Poeng</th>
-                    <th scope="col">Gjennomsnitt</th>
-                    <th scope="col">Poeng bak</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for tuple in department_points %}
-                    {% if request.user.department == tuple.0 %}
-                        <tr class="bg-dark text-light">
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ tuple.0.name }}</td>
-                            <td>{{ tuple.0.users.all.count }}</td>
-                            <td>{{ tuple.1 }}</td>
-                            <td>{{ tuple.2 | default:'0' }}</td>
-                            <td class="text-danger">{{ tuple.3 }}</td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ tuple.0.name }}</td>
-                            <td>{{ tuple.0.users.all.count }}</td>
-                            <td>{{ tuple.1 }}</td>
-                            <td>{{ tuple.2 | default:'0' }}</td>
-                            <td class="text-danger">{{ tuple.3 }}</td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table id="table-results" class="table text-light">
+                <thead>
+                    <tr class="cursor-n-resize">
+                        <th scope="col">Rank</th>
+                        <th scope="col">Avdeling</th>
+                        <th scope="col">#Medlemmer</th>
+                        <th scope="col">Poeng</th>
+                        <th scope="col">Gjennomsnitt</th>
+                        <th scope="col">Poeng bak</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tuple in department_points %}
+                        {% if request.user.department == tuple.0 %}
+                            <tr class="bg-dark text-light">
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ tuple.0.name }}</td>
+                                <td>{{ tuple.0.users.all.count }}</td>
+                                <td>{{ tuple.1 }}</td>
+                                <td>{{ tuple.2 | default:'0' }}</td>
+                                <td class="text-danger">{{ tuple.3 }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ tuple.0.name }}</td>
+                                <td>{{ tuple.0.users.all.count }}</td>
+                                <td>{{ tuple.1 }}</td>
+                                <td>{{ tuple.2 | default:'0' }}</td>
+                                <td class="text-danger">{{ tuple.3 }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
         {% if rank == 1 %}
             <div class="h1">
@@ -99,7 +107,7 @@
                     <li data-target="#carousel-workout" data-slide-to="5"></li>
                 </ol>
 
-                <div class="carousel-inner rounded">
+                <div class="carousel-inner rounded-xl">
 
                     <div class="carousel-item active">
                         <img src="{% static "distance/images/crossfit.png" %}" class="d-block w-100" alt="...">
@@ -208,6 +216,22 @@
             $(function() {
                 $("#table-results").tablesorter();
             });
+
+            $(".rectangle-1").animate({height: '150px'}, 600, function() {
+                $("#text-3").removeClass("invisible").addClass("animated zoomInRight");
+                setTimeout(
+                    function () {
+                        $("#text-2").removeClass("invisible").addClass("animated zoomInLeft");
+                    }, 400
+                )
+                setTimeout(
+                    function () {
+                        $("#text-1").removeClass("invisible").addClass("animated zoomInDown");
+                    }, 900
+                )
+            })
+            $(".rectangle-2").animate({height: '100px'}, 600);
+            $(".rectangle-3").animate({height: '50px'}, 600);
 
         })
     </script>
