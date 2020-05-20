@@ -217,18 +217,22 @@
                 $("#table-results").tablesorter();
             });
 
-            $(".rectangle-1").animate({height: '150px'}, 600, function() {
+            function show1() {
+                $("#text-1").removeClass("invisible").addClass("animated zoomInDown");
+            }
+
+            function show2() {
+                $("#text-2").removeClass("invisible").addClass("animated zoomInLeft");
+            }
+
+            function show3() {
                 $("#text-3").removeClass("invisible").addClass("animated zoomInRight");
-                setTimeout(
-                    function () {
-                        $("#text-2").removeClass("invisible").addClass("animated zoomInLeft");
-                    }, 400
-                )
-                setTimeout(
-                    function () {
-                        $("#text-1").removeClass("invisible").addClass("animated zoomInDown");
-                    }, 900
-                )
+            }
+
+            $(".rectangle-1").animate({height: '150px'}, 600, function() {
+                show3();
+                setTimeout(show2, 400);
+                setTimeout(show1, 900);
             })
             $(".rectangle-2").animate({height: '100px'}, 600);
             $(".rectangle-3").animate({height: '50px'}, 600);
