@@ -8,13 +8,13 @@
         tbody tr:hover {
             background-color: rgba(255,0,0,0.2);
         }
-        .rectangle-1 {
+        #rectangle-1 {
             background-color: rgba(185,5,5,1);
         }
-        .rectangle-2 {
+        #rectangle-2 {
             background-color: rgba(185,5,5,0.5);
         }
-        .rectangle-3 {
+        #rectangle-3 {
             background-color: rgba(185,5,5,0.2);
         }
         .podium {
@@ -32,23 +32,23 @@
 
         <div class="mb-5">
             <div class="row px-3 justify-content-center d-flex align-items-end podium">
-                <div class="col-4 col-sm-2 px-1 text-center">
-                    <div id="text-2" class="invisible">
+                <div id="podium-2" class="col-4 col-sm-2 px-1 text-center">
+                    <div id="text-2" class="invisible animated">
                         {{ department_points.1.0.name }}: {{ department_points.1.1 }} poeng
                     </div>
-                    <div class="rectangle-2 rounded mt-3"></div>
+                    <div id="rectangle-2" class="rounded mt-3"></div>
                 </div>
-                <div class="col-4 col-sm-2 px-1 text-center">
-                    <div id="text-1" class="invisible">
+                <div id="podium-1" class="col-4 col-sm-2 px-1 text-center">
+                    <div id="text-1" class="invisible animated">
                         {{ department_points.0.0.name }}: {{ department_points.0.1 }} poeng
                     </div>
-                    <div class="rectangle-1 rounded mt-3"></div>
+                    <div id="rectangle-1" class="rounded mt-3"></div>
                 </div>
-                <div class="col-4 col-sm-2 px-1 text-center">
-                    <div id="text-3" class="invisible">
+                <div id="podium-3" class="col-4 col-sm-2 px-1 text-center">
+                    <div id="text-3" class="invisible animated">
                         {{ department_points.2.0.name }}: {{ department_points.2.1 }} poeng
                     </div>
-                    <div class="rectangle-3 rounded mt-3"></div>
+                    <div id="rectangle-3" class="rounded mt-3"></div>
                 </div>
             </div>
         </div>
@@ -212,30 +212,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha256-dtGH1XcAyKopMui5x20KnPxuGuSx9Rs6piJB/4Oqu6I=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-
             $(function() {
                 $("#table-results").tablesorter();
             });
+            
+            const animations = ["zoomInDown", "zoomInLeft", "zoomInRight", "tada"]
 
-            function show1() {
-                $("#text-1").removeClass("invisible").addClass("animated zoomInDown");
+            // help-function
+            function animate(selector, index) {
+                $(selector).removeClass("invisible").addClass(animations[index]);
             }
 
-            function show2() {
-                $("#text-2").removeClass("invisible").addClass("animated zoomInLeft");
+            // help-function
+            function cleanAnimations(element) {
+                $(element).removeClass(animations);
             }
 
-            function show3() {
-                $("#text-3").removeClass("invisible").addClass("animated zoomInRight");
-            }
-
-            $(".rectangle-1").animate({height: '150px'}, 600, function() {
-                show3();
-                setTimeout(show2, 400);
-                setTimeout(show1, 900);
+            // Animate podium. When 1 is finished, animate texts
+            $("#rectangle-1").animate({height: '150px'}, 600, function() {
+                animate("#text-3", 2);
+                setTimeout(animate, 400, "#text-2", 1);
+                setTimeout(animate, 900, "#text-1", 0);
             })
-            $(".rectangle-2").animate({height: '100px'}, 600);
-            $(".rectangle-3").animate({height: '50px'}, 600);
+            $("#rectangle-2").animate({height: '100px'}, 600);
+            $("#rectangle-3").animate({height: '50px'}, 600);
+
+            // Attention seeker
+            $("#rectangle-1").on("mouseover", function() {
+                animate("#text-1", 3);
+            })
+
+            // Clean old animations when finished to enable future animations
+            $('.animated').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', cleanAnimations, function() {
+                cleanAnimations(this);
+            });
 
         })
     </script>
