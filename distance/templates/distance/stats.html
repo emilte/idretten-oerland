@@ -215,7 +215,7 @@
             $(function() {
                 $("#table-results").tablesorter();
             });
-            
+
             const animations = ["zoomInDown", "zoomInLeft", "zoomInRight", "tada"]
 
             // help-function
@@ -243,7 +243,7 @@
             })
 
             // Clean old animations when finished to enable future animations
-            $('.animated').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', cleanAnimations, function() {
+            $('.animated').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
                 cleanAnimations(this);
             });
 

@@ -31,7 +31,7 @@
                     <th scope="col">Antall km</th>
                     <th scope="col">
                         Poeng
-                        <span class="lni-question-circle h4 text-secondary cursor-pointer" data-toggle="modal" data-target="#modal-points"></span>
+                        <span class="lni-question-circle h4 text-secondary cursor-pointer d-inline-block" data-toggle="modal" data-target="#modal-points"></span>
                     </th>
                 </tr>
             </thead>
@@ -104,6 +104,14 @@
 
             $(function() {
                 $("#table-results").tablesorter();
+            });
+
+            $(".lni-question-circle").addClass("animated rubberBand text-danger");
+
+            // DOESN'T WORK. Don't know why
+            // Clean old animations when finished to enable future animations
+            $('.lni-question-circle').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                $(this).removeClass("animated rubberBand text-danger");
             });
 
         })
